@@ -31,6 +31,22 @@
       "oAP" : "\/.gitignore",
       "oF" : 1
     },
+    "\/.vscode\/launch.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/.vscode\/launch-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
+    "\/.vscode\/tasks.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/.vscode\/tasks-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
     "\/bootstrap.php" : {
       "cB" : 0,
       "ft" : 8192,

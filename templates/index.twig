@@ -5,7 +5,7 @@
 {% block content %}
 <div class="simple-screen">
     <div class="simple-header">
-        <input type="date" id="current-date" class="date-input">
+        <input type="date" id="current-date" class="date-input" value="{{ now|date('Y-m-d') }}">
         <div class="shift-selector">
             <button class="shift-btn active" data-shift="day">Day</button> / 
             <button class="shift-btn" data-shift="night">Night</button>
@@ -13,17 +13,70 @@
     </div>
     
     <div class="main-button">
-        <button id="new-task-btn">New Task</button>
+        <a href="{{ url('new-task') }}" id="new-task-btn">New Task</a>
     </div>
     
     <div class="bottom-buttons">
-        <button id="pending-tasks-btn">Pending Tasks</button>
-        <button id="completed-tasks-btn">Completed Tasks</button>
+        <a href="{{ url('pending-tasks') }}" id="pending-tasks-btn">Pending Tasks</a>
+        <a href="{{ url('completed-tasks') }}" id="completed-tasks-btn">Completed Tasks</a>
         <button id="shift-complete-btn" class="shift-btn">Shift Complete</button>
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ alias('@web') }}/src/js/index.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Store date and shift in localStorage for use across pages
+    const dateInput = document.getElementById('current-date');
+    const shiftButtons = document.querySelectorAll('.shift-btn');
+    
+    if (dateInput) {
+        dateInput.addEventListener('change', function() {
+            localStorage.setItem('currentDate', this.value);
+        });
+        
+        // Initialize or restore from localStorage
+        const savedDate = localStorage.getItem('currentDate');
+        if (savedDate) {
+            dateInput.value = savedDate;
+        } else {
+            localStorage.setItem('currentDate', dateInput.value);
+        }
+    }
+    
+    if (shiftButtons.length) {
+        shiftButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                shiftButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                localStorage.setItem('currentShift', this.dataset.shift);
+            });
+        });
+        
+        // Restore shift selection from localStorage
+        const savedShift = localStorage.getItem('currentShift');
+        if (savedShift) {
+            const activeButton = document.querySelector(`.shift-btn[data-shift="${savedShift}"]`);
+            if (activeButton) {
+                shiftButtons.forEach(b => b.classList.remove('active'));
+                activeButton.classList.add('active');
+            }
+        } else {
+            // Store initial selection
+            localStorage.setItem('currentShift', 'day');
+        }
+    }
+    
+    // Handle shift complete button
+    const shiftCompleteBtn = document.getElementById('shift-complete-btn');
+    if (shiftCompleteBtn) {
+        shiftCompleteBtn.addEventListener('click', function() {
+            if (confirm('Are you sure you want to complete this shift?')) {
+                window.location.href = '{{ url('shift-report') }}';
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

@@ -87,6 +87,22 @@ fieldLayouts:
             dateAdded: '2025-03-27T13:42:59+00:00'
             elementCondition: null
             fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
+            handle: fd_time_allocated
+            includeInCards: false
+            instructions: null
+            label: 'Time Allocated'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 2676a680-755c-4c35-9b96-bc3b1e7548cd
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
             handle: fd_time_received
             includeInCards: false
             instructions: null
@@ -96,6 +112,22 @@ fieldLayouts:
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: dd54d586-582a-49b5-9113-5d1b72aea80c
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
+            handle: fd_time_completed
+            includeInCards: false
+            instructions: null
+            label: 'Time Completed'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: dac9043a-cf6f-41f4-8f62-6953062c0b51
             userCondition: null
             warning: null
             width: 100
@@ -192,38 +224,6 @@ fieldLayouts:
             tip: null
             type: craft\fieldlayoutelements\CustomField
             uid: 89544c26-40e6-42c6-86c7-d71b926e239d
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
-            handle: fd_time_allocated
-            includeInCards: false
-            instructions: null
-            label: 'Time Allocated'
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 2676a680-755c-4c35-9b96-bc3b1e7548cd
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
-            handle: fd_time_completed
-            includeInCards: false
-            instructions: null
-            label: 'Time Completed'
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: dac9043a-cf6f-41f4-8f62-6953062c0b51
             userCondition: null
             warning: null
             width: 100

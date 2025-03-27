@@ -1,110 +1,97 @@
 {% extends "_layout.twig" %}
 
-{% block title %}Pending Tasks - Porter Task Management{% endblock %}
-
-{% block pageTitle %}Pending Tasks{% endblock %}
-
-{% block headerActions %}
-<a href="{{ siteUrl }}" class="back-btn">← Back to Home</a>
-{% endblock %}
+{% block title %}Pending Tasks{% endblock %}
 
 {% block content %}
-<div class="task-list-header">
-    <div class="shift-info">
-        <span id="current-date-display">Date: </span>
-        <span id="current-shift-display">Shift: </span>
-    </div>
-    <div class="list-actions">
-        <button id="refresh-btn" class="icon-btn">↻</button>
-    </div>
-</div>
-
 <div class="tasks-container">
-    <table class="tasks-table">
-        <thead>
-            <tr>
-                <th>Task Type</th>
-                <th>From</th>
-                <th>To</th>
-                <th>Transport</th>
-                <th>Time Received</th>
-                <th>Staff</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="pending-tasks-list">
-            <!-- Will be populated dynamically -->
-        </tbody>
-    </table>
-    <div id="empty-state" class="empty-state">
-        <p>No pending tasks available</p>
+    <h1>Pending Tasks</h1>
+    
+    <div class="filter-controls">
+        <input type="date" id="filter-date" class="date-input" value="{{ now|date('Y-m-d') }}">
+        <div class="shift-selector">
+            <button class="shift-btn active" data-shift="day">Day</button> / 
+            <button class="shift-btn" data-shift="night">Night</button>
+        </div>
+        <button id="apply-filter" class="action-btn">Apply Filter</button>
+    </div>
+    
+    <div class="tasks-list">
+        <table class="tasks-table">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Transport</th>
+                    <th>Time Received</th>
+                    <th>Staff</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="pending-tasks-list">
+                {% set currentDate = now|date('Y-m-d') %}
+                {% set currentShift = 'day' %}
+                
+                {% set pendingTasks = craft.entries()
+                    .section('tasks')
+                    .fd_status('pending')
+                    .fd_date(currentDate)
+                    .fd_shift(currentShift)
+                    .all() %}
+                
+                {% if pendingTasks|length > 0 %}
+                    {% for task in pendingTasks %}
+                        <tr>
+                            <td>{{ task.fd_itemType.one().title ?? 'Unknown' }}</td>
+                            <td>{{ task.fd_fromDepartment.one().title ?? 'Unknown' }}</td>
+                            <td>{{ task.fd_toDepartment.one().title ?? 'Unknown' }}</td>
+                            <td>{{ task.fd_transportType ?? '-' }}</td>
+                            <td>{{ task.fd_time_received }}</td>
+                            <td>{{ task.fd_staffMember.one() ? task.fd_staffMember.one().title ~ ' ' ~ task.fd_staffMember.one().fd_surname : 'Unassigned' }}</td>
+                            <td class="action-cell">
+                                <a href="{{ task.cpEditUrl }}" class="table-action-btn edit">Edit</a>
+                                <a href="#" class="table-action-btn complete" data-id="{{ task.id }}">Complete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="empty-state">No pending tasks for this shift.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="back-link">
+        <a href="{{ siteUrl }}">← Back to Home</a>
     </div>
 </div>
 
-<!-- Task Edit Modal -->
-<div id="task-edit-modal" class="modal">
+<!-- Task Completion Modal -->
+<div id="complete-task-modal" class="modal" style="display: none;">
     <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <h2>Edit Task</h2>
-        <form id="edit-task-form">
-            <input type="hidden" id="edit-task-id">
+        <span class="close">&times;</span>
+        <h2>Complete Task</h2>
+        <form id="complete-task-form" method="post" action="{{ actionUrl('entries/save-entry') }}">
+            {{ csrfInput() }}
+            <input type="hidden" id="task-id" name="entryId" value="">
+            <input type="hidden" name="enabled" value="1">
+            <input type="hidden" name="fields[fd_status]" value="completed">
             
             <div class="form-group">
-                <label for="edit-job-category">Job Category:</label>
-                <select id="edit-job-category" required>
-                    <!-- Will be populated from data -->
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="edit-from-department">From Department:</label>
-                <select id="edit-from-department" required>
-                    <!-- Will be populated from data -->
-                </select>
+                <label for="fields-fd_time_completed">Time Completed:</label>
+                <input type="time" id="fields-fd_time_completed" name="fields[fd_time_completed]" value="{{ now|date('H:i') }}" required>
             </div>
             
             <div class="form-group">
-                <label for="edit-to-department">To Department:</label>
-                <select id="edit-to-department" required>
-                    <!-- Will be populated from data -->
-                </select>
+                <label for="fields-fd_notes">Additional Notes:</label>
+                <textarea id="fields-fd_notes" name="fields[fd_notes]" rows="3"></textarea>
             </div>
             
-            <div class="form-group">
-                <label for="edit-item-type">Item Type:</label>
-                <select id="edit-item-type" required>
-                    <!-- Will be populated based on job category -->
-                </select>
-            </div>
-            
-            <div class="form-group edit-transport-options" style="display: none;">
-                <label for="edit-transport-type">Transport Type:</label>
-                <select id="edit-transport-type">
-                    <!-- Will be populated for patient transfers -->
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="edit-staff-member">Staff Member:</label>
-                <div class="search-container">
-                    <input type="text" id="edit-staff-member" placeholder="Start typing name...">
-                    <div id="edit-staff-results" class="search-results"></div>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="edit-time-received">Time Received:</label>
-                <input type="time" id="edit-time-received" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="edit-time-completed">Time Completed:</label>
-                <input type="time" id="edit-time-completed">
-            </div>
-            
-            <div class="form-actions">
-                <button type="button" id="update-pending-btn" class="secondary-btn">Update as Pending</button>
-                <button type="button" id="update-complete-btn" class="primary-btn">Mark as Complete</button>
+            <div class="form-buttons">
+                <button type="button" class="cancel-btn">Cancel</button>
+                <button type="submit" class="submit-btn">Complete Task</button>
             </div>
         </form>
     </div>
@@ -112,5 +99,97 @@
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ alias('@web') }}/src/js/pending-tasks.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize date and shift from localStorage
+    const dateInput = document.getElementById('filter-date');
+    const shiftButtons = document.querySelectorAll('.shift-btn');
+    let currentDate = "{{ now|date('Y-m-d') }}";
+    let currentShift = "day";
+    
+    // Load saved date/shift from localStorage
+    if (dateInput) {
+        const savedDate = localStorage.getItem('currentDate');
+        if (savedDate) {
+            dateInput.value = savedDate;
+            currentDate = savedDate;
+        } else {
+            localStorage.setItem('currentDate', dateInput.value);
+        }
+        
+        dateInput.addEventListener('change', function() {
+            localStorage.setItem('currentDate', this.value);
+            currentDate = this.value;
+        });
+    }
+    
+    if (shiftButtons.length) {
+        const savedShift = localStorage.getItem('currentShift');
+        if (savedShift) {
+            const activeButton = document.querySelector(`.shift-btn[data-shift="${savedShift}"]`);
+            if (activeButton) {
+                shiftButtons.forEach(b => b.classList.remove('active'));
+                activeButton.classList.add('active');
+                currentShift = savedShift;
+            }
+        }
+        
+        shiftButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                shiftButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentShift = this.dataset.shift;
+                localStorage.setItem('currentShift', currentShift);
+            });
+        });
+    }
+    
+    // Apply filter button
+    const applyFilterBtn = document.getElementById('apply-filter');
+    if (applyFilterBtn) {
+        applyFilterBtn.addEventListener('click', function() {
+            // Reload page with new filter
+            window.location.reload();
+        });
+    }
+    
+    // Complete task action
+    const completeButtons = document.querySelectorAll('.table-action-btn.complete');
+    const completeModal = document.getElementById('complete-task-modal');
+    const closeModal = document.querySelector('.modal .close');
+    const cancelBtn = document.querySelector('.modal .cancel-btn');
+    const taskIdInput = document.getElementById('task-id');
+    
+    if (completeButtons.length && completeModal) {
+        completeButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const taskId = this.dataset.id;
+                taskIdInput.value = taskId;
+                completeModal.style.display = 'block';
+            });
+        });
+        
+        // Close modal
+        if (closeModal) {
+            closeModal.addEventListener('click', function() {
+                completeModal.style.display = 'none';
+            });
+        }
+        
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', function() {
+                completeModal.style.display = 'none';
+            });
+        }
+        
+        // Close when clicking outside modal
+        window.addEventListener('click', function(e) {
+            if (e.target === completeModal) {
+                completeModal.style.display = 'none';
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

@@ -35,6 +35,22 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 100
+          -
+            dateAdded: '2025-03-27T15:41:38+00:00'
+            elementCondition: null
+            fieldUid: 8b2381b3-1e31-4f3f-b9fe-67d5e5f66df3 # Departments
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: 'Departments Within'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: ebfaa9a3-ea0a-4c37-a9d2-ab4255d8df6c
+            userCondition: null
+            warning: null
+            width: 100
         name: Content
         uid: d5e87e6d-72ce-4b6c-83fe-fd6d8a3fd425
         userCondition: null

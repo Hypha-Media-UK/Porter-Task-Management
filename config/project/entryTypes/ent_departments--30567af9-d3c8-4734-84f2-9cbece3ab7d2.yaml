@@ -34,7 +34,23 @@ fieldLayouts:
             uid: 054f6829-baf5-4d38-bb5e-cb24d0aab4c8
             userCondition: null
             warning: null
-            width: 100
+            width: 75
+          -
+            dateAdded: '2025-03-27T15:29:27+00:00'
+            elementCondition: null
+            fieldUid: dd26ef8a-39c6-4323-8d51-c0bb6a57f95d # Plain
+            handle: fd_acronym
+            includeInCards: false
+            instructions: null
+            label: Acronym
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 9bf6cc7f-493c-4c91-9520-9924561dd34c
+            userCondition: null
+            warning: null
+            width: 25
         name: Content
         uid: b9934a6d-39e9-4d5b-bc1f-08aff1effb0a
         userCondition: null

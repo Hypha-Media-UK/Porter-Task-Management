@@ -1,82 +1,143 @@
 {% extends "_layout.twig" %}
 
-{% block title %}New Task - Porter Task Management{% endblock %}
-
-{% block pageTitle %}New Task{% endblock %}
-
-{% block headerActions %}
-<a href="{{ siteUrl }}" class="back-btn">← Back to Home</a>
-{% endblock %}
+{% block title %}New Task{% endblock %}
 
 {% block content %}
 <div class="new-task-form">
-    <form id="task-form">
+    <h1>New Task</h1>
+    
+    <form method="post" action="{{ actionUrl('entries/save-entry') }}">
+        {{ csrfInput() }}
+        <input type="hidden" name="sectionId" value="{{ craft.app.sections.getSectionByHandle('tasks').id }}">
+        <input type="hidden" name="typeId" value="{{ craft.app.sections.getSectionByHandle('tasks').entryTypes[0].id }}">
+        <input type="hidden" name="enabled" value="1">
+        <input type="hidden" name="title" value="Task">
+        <input type="hidden" name="redirect" value="{{ 'pending-tasks'|hash }}">
+        
         <div class="form-group">
-            <label for="time-received">Time Received:</label>
-            <input type="time" id="time-received" required>
+            <label for="fields-fd_time_received">Time Received:</label>
+            <input type="time" id="fields-fd_time_received" name="fields[fd_time_received]" value="{{ now|date('H:i') }}" required>
         </div>
         
         <div class="form-group">
-            <label for="job-category">Job Category:</label>
-            <select id="job-category" required>
-                <option value="" disabled selected>Select Job Category</option>
-                <!-- Will be populated from data -->
+            <label for="fields-fd_job_category">Job Category:</label>
+            <select id="fields-fd_job_category" name="fields[fd_job_category][]" required>
+                <option value="">Select Job Category</option>
+                {% for jobCategory in craft.entries.section('jobCategories').all() %}
+                    <option value="{{ jobCategory.id }}">{{ jobCategory.title }}</option>
+                {% endfor %}
             </select>
         </div>
         
         <div class="form-group">
-            <label for="from-department">From Department:</label>
-            <select id="from-department" required>
-                <option value="" disabled selected>Select Department</option>
-                <!-- Will be populated from data -->
+            <label for="fields-fd_fromDepartment">From Department:</label>
+            <select id="fields-fd_fromDepartment" name="fields[fd_fromDepartment][]" required>
+                <option value="">Select Department</option>
+                {% for department in craft.entries.section('departments').all() %}
+                    <option value="{{ department.id }}">{{ department.title }}</option>
+                {% endfor %}
             </select>
         </div>
         
         <div class="form-group">
-            <label for="to-department">To Department:</label>
-            <select id="to-department" required>
-                <option value="" disabled selected>Select Department</option>
-                <!-- Will be populated from data -->
+            <label for="fields-fd_toDepartment">To Department:</label>
+            <select id="fields-fd_toDepartment" name="fields[fd_toDepartment][]" required>
+                <option value="">Select Department</option>
+                {% for department in craft.entries.section('departments').all() %}
+                    <option value="{{ department.id }}">{{ department.title }}</option>
+                {% endfor %}
             </select>
         </div>
         
         <div class="form-group">
-            <label for="item-type">Item Type:</label>
-            <select id="item-type" required>
-                <option value="" disabled selected>Select Item Type</option>
-                <!-- Will be populated based on job category -->
+            <label for="fields-fd_itemType">Item Type:</label>
+            <select id="fields-fd_itemType" name="fields[fd_itemType][]" required>
+                <option value="">Select Item Type</option>
+                {% for jobType in craft.entries.section('jobTypes').all() %}
+                    <option value="{{ jobType.id }}">{{ jobType.title }}</option>
+                {% endfor %}
             </select>
         </div>
         
-        <div class="form-group transport-options" style="display: none;">
-            <label for="transport-type">Transport Type:</label>
-            <select id="transport-type">
-                <option value="" disabled selected>Select Transport</option>
-                <!-- Will be populated for patient transfers -->
+        <div class="form-group" id="transport-container" style="display: none;">
+            <label for="fields-fd_transportType">Transport Type:</label>
+            <select id="fields-fd_transportType" name="fields[fd_transportType]">
+                <option value="">Select Transport Type</option>
+                {% for option in craft.entries.section('jobOptions').all() %}
+                    <option value="{{ option.title }}">{{ option.title }}</option>
+                {% endfor %}
             </select>
         </div>
         
         <div class="form-group">
-            <label for="staff-member">Staff Member (Optional):</label>
-            <div class="search-container">
-                <input type="text" id="staff-member" placeholder="Start typing name...">
-                <div id="staff-results" class="search-results"></div>
-            </div>
+            <label for="fields-fd_staffMember">Assign to Staff Member:</label>
+            <select id="fields-fd_staffMember" name="fields[fd_staffMember][]">
+                <option value="">Unassigned</option>
+                {% for staffMember in craft.entries.section('staff').all() %}
+                    <option value="{{ staffMember.id }}">{{ staffMember.title }} {{ staffMember.fd_surname }}</option>
+                {% endfor %}
+            </select>
         </div>
         
         <div class="form-group">
-            <label for="time-completed">Time Completed (Optional):</label>
-            <input type="time" id="time-completed">
+            <label for="fields-fd_notes">Notes:</label>
+            <textarea id="fields-fd_notes" name="fields[fd_notes]" rows="3"></textarea>
         </div>
+        
+        <!-- Hidden fields for date and shift info -->
+        <input type="hidden" id="fields-fd_date" name="fields[fd_date]" value="{{ now|date('Y-m-d') }}">
+        <input type="hidden" id="fields-fd_shift" name="fields[fd_shift]" value="day">
         
         <div class="form-actions">
-            <button type="button" id="pending-btn" class="secondary-btn">Save as Pending</button>
-            <button type="button" id="complete-btn" class="primary-btn">Mark as Complete</button>
+            <button type="submit" name="fields[fd_status]" value="pending" class="secondary-btn">Save as Pending</button>
+            <button type="submit" name="fields[fd_status]" value="completed" class="primary-btn">Mark as Complete</button>
         </div>
     </form>
+    
+    <div class="back-link">
+        <a href="{{ url('') }}">← Back to Home</a>
+    </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ alias('@web') }}/src/js/new-task.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Set current date from localStorage
+    const dateInput = document.getElementById('fields-fd_date');
+    if (dateInput) {
+        const savedDate = localStorage.getItem('currentDate');
+        if (savedDate) {
+            dateInput.value = savedDate;
+        }
+    }
+    
+    // Set current shift from localStorage
+    const shiftInput = document.getElementById('fields-fd_shift');
+    if (shiftInput) {
+        const savedShift = localStorage.getItem('currentShift');
+        if (savedShift) {
+            shiftInput.value = savedShift;
+        }
+    }
+    
+    // Show/hide transport options based on item type
+    const itemTypeSelect = document.getElementById('fields-fd_itemType');
+    const transportContainer = document.getElementById('transport-container');
+    
+    if (itemTypeSelect && transportContainer) {
+        itemTypeSelect.addEventListener('change', function() {
+            const selectedValue = this.value;
+            const selectedText = this.options[this.selectedIndex].text;
+            
+            // Only show transport options for Patient Transfer
+            if (selectedText === 'Patient Transfer') {
+                transportContainer.style.display = 'block';
+            } else {
+                transportContainer.style.display = 'none';
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

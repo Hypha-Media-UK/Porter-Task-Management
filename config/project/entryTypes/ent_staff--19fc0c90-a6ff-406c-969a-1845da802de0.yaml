@@ -54,7 +54,7 @@ fieldLayouts:
         name: Content
         uid: 975e9067-be7b-4322-bde4-cb273c461d21
         userCondition: null
-handle: entype_staff
+handle: ent_staff
 hasTitleField: true
 icon: person
 name: Staff
