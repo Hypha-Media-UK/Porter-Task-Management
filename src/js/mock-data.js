@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   
   // Handle page-specific initializations
-  if (document.querySelector('.modern-home-screen')) {
+  if (document.querySelector('.simple-screen')) {
     console.log('Initializing home page with mock data');
     initializeHomePage();
   } else if (document.querySelector('.new-task-form')) {
@@ -90,8 +90,8 @@ document.addEventListener('DOMContentLoaded', () => {
       dateInput.value = formattedDate;
     }
     
-    // Set up shift toggle buttons
-    const shiftButtons = document.querySelectorAll('.shift-toggle-btn');
+    // Set up shift buttons
+    const shiftButtons = document.querySelectorAll('.shift-btn');
     if (shiftButtons.length) {
       shiftButtons.forEach(btn => {
         btn.addEventListener('click', () => {

@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Porter Task Management{% endblock %}</title>
+    <title>{% block title %}Porter{% endblock %}</title>
     <link rel="stylesheet" href="{{ alias('@web') }}/src/css/styles.css">
+    <link rel="stylesheet" href="{{ alias('@web') }}/src/css/simple.css">
     {% block additionalStyles %}{% endblock %}
 </head>
 <body>
     <div class="app-container">
-        {% block headerActions %}{% endblock %}
         <main>
             {% block content %}{% endblock %}
         </main>
