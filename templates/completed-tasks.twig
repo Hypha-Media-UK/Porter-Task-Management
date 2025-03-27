@@ -1,0 +1,131 @@
+{% extends "_layout.twig" %}
+
+{% block title %}Completed Tasks - Porter Task Management{% endblock %}
+
+{% block pageTitle %}Completed Tasks{% endblock %}
+
+{% block headerActions %}
+<a href="{{ siteUrl }}" class="back-btn">← Back to Home</a>
+{% endblock %}
+
+{% block content %}
+<div class="task-list-header">
+    <div class="shift-info">
+        <span id="current-date-display">Date: </span>
+        <span id="current-shift-display">Shift: </span>
+    </div>
+    <div class="list-actions">
+        <button id="refresh-btn" class="icon-btn">↻</button>
+        <button id="print-btn" class="secondary-btn">Print List</button>
+    </div>
+</div>
+
+<div class="tasks-container">
+    <table class="tasks-table">
+        <thead>
+            <tr>
+                <th>Task Type</th>
+                <th>From</th>
+                <th>To</th>
+                <th>Transport</th>
+                <th>Time Received</th>
+                <th>Time Completed</th>
+                <th>Staff</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="completed-tasks-list">
+            <!-- Will be populated dynamically -->
+        </tbody>
+    </table>
+    <div id="empty-state" class="empty-state">
+        <p>No completed tasks available</p>
+    </div>
+</div>
+
+<!-- Task Details Modal -->
+<div id="task-details-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Task Details</h2>
+        <div id="task-details-content">
+            <!-- Will be populated dynamically -->
+        </div>
+        <div class="form-actions">
+            <button type="button" id="edit-task-btn" class="secondary-btn">Edit Task</button>
+        </div>
+    </div>
+</div>
+
+<!-- Task Edit Modal -->
+<div id="task-edit-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Edit Task</h2>
+        <form id="edit-task-form">
+            <input type="hidden" id="edit-task-id">
+            
+            <div class="form-group">
+                <label for="edit-job-category">Job Category:</label>
+                <select id="edit-job-category" required>
+                    <!-- Will be populated from data -->
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-from-department">From Department:</label>
+                <select id="edit-from-department" required>
+                    <!-- Will be populated from data -->
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-to-department">To Department:</label>
+                <select id="edit-to-department" required>
+                    <!-- Will be populated from data -->
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-item-type">Item Type:</label>
+                <select id="edit-item-type" required>
+                    <!-- Will be populated based on job category -->
+                </select>
+            </div>
+            
+            <div class="form-group edit-transport-options" style="display: none;">
+                <label for="edit-transport-type">Transport Type:</label>
+                <select id="edit-transport-type">
+                    <!-- Will be populated for patient transfers -->
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-staff-member">Staff Member:</label>
+                <div class="search-container">
+                    <input type="text" id="edit-staff-member" placeholder="Start typing name...">
+                    <div id="edit-staff-results" class="search-results"></div>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-time-received">Time Received:</label>
+                <input type="time" id="edit-time-received" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-time-completed">Time Completed:</label>
+                <input type="time" id="edit-time-completed" required>
+            </div>
+            
+            <div class="form-actions">
+                <button type="button" id="update-task-btn" class="primary-btn">Update Task</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ alias('@web') }}/src/js/completed-tasks.js"></script>
+{% endblock %}

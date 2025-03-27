@@ -1,0 +1,36 @@
+{% extends "_layout.twig" %}
+
+{% block title %}Porter Task Management{% endblock %}
+
+{% block content %}
+<div class="modern-home-screen">
+    <div class="top-controls">
+        <div class="integrated-controls">
+            <input type="date" id="current-date" class="super-subtle-input">
+            <div class="shift-toggle">
+                <button class="shift-toggle-btn active" data-shift="day">Day</button>
+                <button class="shift-toggle-btn" data-shift="night">Night</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-action">
+        <button id="new-task-btn" class="primary-action-btn">New Task</button>
+    </div>
+    
+    <div class="bottom-actions">
+        <div class="task-views">
+            <button id="pending-tasks-btn" class="action-btn">Pending Tasks</button>
+            <button id="completed-tasks-btn" class="action-btn">Completed Tasks</button>
+        </div>
+        
+        <div class="shift-complete-section">
+            <button id="shift-complete-btn" class="warning-btn">Shift Complete</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ alias('@web') }}/src/js/index.js"></script>
+{% endblock %}

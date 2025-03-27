@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Porter Task Management{% endblock %}</title>
+    <link rel="stylesheet" href="{{ alias('@web') }}/src/css/styles.css">
+    {% block additionalStyles %}{% endblock %}
+</head>
+<body>
+    <div class="app-container">
+        {% block headerActions %}{% endblock %}
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Load just the mock data script that handles initialization -->
+    <script src="{{ alias('@web') }}/src/js/mock-data.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

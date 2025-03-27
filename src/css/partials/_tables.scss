@@ -1,0 +1,53 @@
+@use 'variables' as vars;
+@use 'mixins' as mix;
+
+// Table styles
+.tasks-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: vars.$spacing-base;
+  
+  th {
+    background-color: vars.$primary-color;
+    color: white;
+    padding: vars.$spacing-md;
+    text-align: left;
+    font-weight: vars.$font-weight-medium;
+  }
+  
+  td {
+    padding: vars.$spacing-md;
+    border-bottom: 1px solid vars.$gray-medium;
+    vertical-align: middle;
+  }
+  
+  tr:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  
+  .action-cell {
+    white-space: nowrap;
+    text-align: right;
+  }
+}
+
+// Report table
+.report-table {
+  width: 100%;
+  border-collapse: collapse;
+  
+  th, td {
+    border: 1px solid vars.$gray-medium;
+    padding: vars.$spacing-md;
+    text-align: left;
+  }
+  
+  th {
+    background-color: vars.$primary-color;
+    color: white;
+  }
+  
+  tr:nth-child(even) {
+    background-color: vars.$gray-light;
+  }
+}

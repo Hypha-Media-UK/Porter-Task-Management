@@ -1,0 +1,12 @@
+// Main partials index file that forwards all partials
+// This makes it easier to import all partials at once with @use 'partials' as *;
+
+@forward 'variables';
+@forward 'mixins';
+@forward 'reset';
+@forward 'layout';
+@forward 'buttons';
+@forward 'forms';
+@forward 'tables';
+@forward 'components';
+@forward 'modals';

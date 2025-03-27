@@ -1,0 +1,162 @@
+@use 'variables' as vars;
+@use 'mixins' as mix;
+
+// Main layout styles
+.app-container {
+  @include mix.flex(column);
+  min-height: 100vh;
+  max-width: vars.$container-max-width;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: vars.$box-shadow;
+}
+
+header {
+  @include mix.flex(row, space-between, center);
+  padding: vars.$spacing-lg;
+  background-color: vars.$primary-color;
+  color: white;
+  
+  h1 {
+    color: white;
+    margin-bottom: 0;
+    font-size: vars.$font-size-xxl;
+  }
+  
+  @include mix.respond-to(md) {
+    flex-direction: column;
+    text-align: center;
+    gap: vars.$spacing-base;
+  }
+}
+
+.header-actions {
+  @include mix.flex(row);
+  gap: vars.$spacing-base;
+}
+
+main {
+  flex: 1;
+  padding: vars.$spacing-xl;
+}
+
+footer {
+  background-color: vars.$gray-light;
+  padding: vars.$spacing-base;
+  text-align: center;
+  color: vars.$gray-dark;
+  font-size: vars.$font-size-small;
+}
+
+// Back Button
+.back-btn {
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  font-weight: vars.$font-weight-medium;
+  
+  &:hover {
+    text-decoration: none;
+    opacity: 0.8;
+  }
+}
+
+// Home Screen layout
+.home-screen {
+  @include mix.flex(column);
+  gap: vars.$spacing-xl;
+}
+
+.shift-details {
+  @include mix.flex(row, flex-start, flex-start, wrap);
+  gap: vars.$spacing-lg;
+  background-color: vars.$gray-light;
+  padding: vars.$spacing-lg;
+  border-radius: vars.$border-radius;
+  
+  @include mix.respond-to(md) {
+    flex-direction: column;
+  }
+}
+
+.date-selector, 
+.shift-selector {
+  @include mix.flex(column);
+  gap: vars.$spacing-sm;
+}
+
+.shift-options {
+  @include mix.flex(row);
+  gap: vars.$spacing-base;
+}
+
+.action-buttons {
+  @include mix.flex(row, center, center);
+  gap: vars.$spacing-base;
+}
+
+.task-views {
+  @include mix.flex(row, center, center);
+  gap: vars.$spacing-base;
+  
+  @include mix.respond-to(md) {
+    flex-direction: column;
+  }
+}
+
+.shift-complete-section {
+  @include mix.flex(row, center, center);
+  margin-top: vars.$spacing-xl;
+}
+
+// Task List
+.task-list-header {
+  @include mix.flex(row, space-between, center);
+  margin-bottom: vars.$spacing-lg;
+}
+
+.shift-info {
+  @include mix.flex(row);
+  gap: vars.$spacing-lg;
+  font-weight: vars.$font-weight-medium;
+}
+
+.list-actions {
+  @include mix.flex(row);
+  gap: vars.$spacing-sm;
+}
+
+.tasks-container {
+  background-color: vars.$gray-light;
+  border-radius: vars.$border-radius;
+  padding: vars.$spacing-lg;
+  overflow-x: auto;
+}
+
+// Report layout
+.report-header {
+  text-align: center;
+  margin-bottom: vars.$spacing-xl;
+}
+
+.report-summary {
+  margin-bottom: vars.$spacing-xl;
+}
+
+.summary-box {
+  background-color: vars.$gray-light;
+  padding: vars.$spacing-lg;
+  border-radius: vars.$border-radius;
+}
+
+.report-table-container {
+  margin-bottom: vars.$spacing-xl;
+  overflow-x: auto;
+}
+
+.report-footer {
+  text-align: right;
+  font-style: italic;
+  font-size: vars.$font-size-small;
+  color: vars.$gray-dark;
+}

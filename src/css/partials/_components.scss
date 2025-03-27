@@ -1,0 +1,67 @@
+@use 'variables' as vars;
+@use 'mixins' as mix;
+
+// Task Card
+.task-card {
+  @include mix.card;
+  cursor: pointer;
+  transition: transform 0.2s;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-2px);
+    
+    .delete-task-btn {
+      opacity: 1;
+    }
+  }
+}
+
+.task-header {
+  @include mix.flex(row, space-between);
+  margin-bottom: vars.$spacing-sm;
+}
+
+.task-title {
+  font-weight: vars.$font-weight-bold;
+}
+
+.task-time {
+  color: vars.$gray-dark;
+  font-size: 0.9rem;
+}
+
+.task-details {
+  @include mix.grid(auto-fill, vars.$spacing-sm);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  
+  @include mix.respond-to(md) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.task-detail {
+  @include mix.flex(column);
+}
+
+.detail-label {
+  font-size: 0.8rem;
+  color: vars.$gray-dark;
+}
+
+.detail-value {
+  font-weight: vars.$font-weight-medium;
+}
+
+// Empty state
+.empty-state {
+  text-align: center;
+  padding: vars.$spacing-xl;
+  color: vars.$gray-dark;
+}
+
+// Task list
+.task-list {
+  @include mix.flex(column);
+  gap: vars.$spacing-base;
+}

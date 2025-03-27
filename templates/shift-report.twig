@@ -1,0 +1,65 @@
+{% extends "_layout.twig" %}
+
+{% block title %}Shift Report - Porter Task Management{% endblock %}
+
+{% block pageTitle %}Shift Report{% endblock %}
+
+{% block headerActions %}
+<div class="header-actions">
+    <a href="{{ siteUrl }}" class="back-btn no-print">← Back to Home</a>
+    <button id="print-report" class="primary-btn no-print">Print Report</button>
+</div>
+{% endblock %}
+
+{% block additionalStyles %}
+<link rel="stylesheet" href="{{ alias('@web') }}/src/css/print.css" media="print">
+{% endblock %}
+
+{% block content %}
+<div class="report-header">
+    <h2>Porter Task Management - Shift Report</h2>
+    <div class="shift-details">
+        <span id="report-date">Date: </span>
+        <span id="report-shift">Shift: </span>
+    </div>
+</div>
+
+<div class="report-summary">
+    <div class="summary-box">
+        <h3>Summary</h3>
+        <p>Total Tasks: <span id="total-tasks">0</span></p>
+        <p>Completed Tasks: <span id="completed-count">0</span></p>
+        <p>Pending Tasks: <span id="pending-count">0</span></p>
+    </div>
+</div>
+
+<div class="report-table-container">
+    <h3>Tasks</h3>
+    <table id="tasks-report-table" class="report-table">
+        <thead>
+            <tr>
+                <th>Task Type</th>
+                <th>From Department</th>
+                <th>To Department</th>
+                <th>Transport</th>
+                <th>Time Received</th>
+                <th>Time Allocated</th>
+                <th>Time Completed</th>
+                <th>Staff Member</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="tasks-report-body">
+            <!-- Will be populated with task data -->
+        </tbody>
+    </table>
+</div>
+
+<div class="report-footer">
+    <p>Report generated: <span id="generation-time"></span></p>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ alias('@web') }}/src/js/shift-report.js"></script>
+{% endblock %}

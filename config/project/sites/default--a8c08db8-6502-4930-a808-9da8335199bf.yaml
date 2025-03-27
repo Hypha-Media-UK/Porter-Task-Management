@@ -1,0 +1,8 @@
+baseUrl: $PRIMARY_SITE_URL
+handle: default
+hasUrls: true
+language: en-GB
+name: 'Porter Track'
+primary: true
+siteGroup: d6094da4-5bef-4dce-b2bb-83ea84ec2d30 # Porter Track
+sortOrder: 1

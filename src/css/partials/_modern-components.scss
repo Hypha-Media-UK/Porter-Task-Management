@@ -1,0 +1,216 @@
+@use 'variables' as vars;
+@use 'mixins' as mix;
+@use 'sass:color';
+
+// Modern UI components for the redesigned Porter Task Management app
+// Focused on mobile-first design and modern aesthetics
+
+// Modern home screen layout
+.modern-home-screen {
+  @include mix.flex(column, space-between, center);
+  min-height: 100vh;
+  padding: vars.$spacing-lg;
+  background-color: vars.$light-color;
+}
+
+// Top controls for date and shift
+.top-controls {
+  width: 100%;
+  margin-bottom: vars.$spacing-xl;
+}
+
+// Integrated date and shift controls
+.integrated-controls {
+  @include mix.flex(row, center, center);
+  gap: vars.$spacing-md;
+  background-color: white;
+  border-radius: 25px;
+  padding: 4px 4px 4px 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid vars.$gray-medium;
+  width: fit-content;
+  margin: 0 auto;
+  
+  @include mix.respond-to(sm) {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+// Super subtle date input
+.super-subtle-input {
+  border: none;
+  background-color: transparent;
+  font-size: 0.9rem;
+  color: vars.$gray-dark;
+  padding: vars.$spacing-xs;
+  width: auto;
+  
+  &:focus {
+    outline: none;
+  }
+  
+  // Hide calendar icon on some browsers
+  &::-webkit-calendar-picker-indicator {
+    opacity: 0.5;
+    cursor: pointer;
+  }
+}
+
+// Shift toggle buttons
+.shift-toggle {
+  @include mix.flex(row, center, center);
+  background-color: vars.$gray-light;
+  border-radius: 20px;
+  padding: 2px;
+  width: fit-content;
+  border: 1px solid vars.$gray-medium;
+  overflow: hidden;
+}
+
+.shift-toggle-btn {
+  background: none;
+  border: none;
+  padding: vars.$spacing-sm vars.$spacing-md;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  color: vars.$gray-dark;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &.active {
+    background-color: white;
+    color: vars.$primary-color;
+    font-weight: vars.$font-weight-medium;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// Main action area (centered)
+.main-action {
+  flex: 1;
+  @include mix.flex(column, center, center);
+  width: 100%;
+}
+
+// Primary action button (large, centered)
+.primary-action-btn {
+  background-color: vars.$primary-color;
+  color: white;
+  border: none;
+  border-radius: 50px;
+  padding: vars.$spacing-lg vars.$spacing-xxl;
+  font-size: 1.2rem;
+  font-weight: vars.$font-weight-medium;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease;
+  
+  &:hover, &:focus {
+    background-color: color.scale(vars.$primary-color, $lightness: -5%);
+    box-shadow: 0 7px 14px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.08);
+    transform: translateY(-1px);
+  }
+  
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// Bottom action buttons
+.bottom-actions {
+  width: 100%;
+  margin-top: vars.$spacing-xl;
+  @include mix.flex(column, center, center);
+  gap: vars.$spacing-lg;
+}
+
+.task-views {
+  width: 100%;
+  @include mix.flex(row, center, center, wrap);
+  gap: vars.$spacing-md;
+  
+  @include mix.respond-to(sm) {
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+// Standard action button
+.action-btn {
+  background-color: white;
+  color: vars.$gray-dark;
+  border: 1px solid vars.$gray-medium;
+  border-radius: 10px;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  font-size: 1rem;
+  font-weight: vars.$font-weight-medium;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  flex: 1;
+  min-width: 150px;
+  text-align: center;
+  
+  &:hover, &:focus {
+    border-color: vars.$primary-color;
+    color: vars.$primary-color;
+    background-color: vars.$gray-light;
+  }
+  
+  @include mix.respond-to(sm) {
+    width: 100%;
+  }
+}
+
+// Shift complete section
+.shift-complete-section {
+  width: 100%;
+  margin-top: vars.$spacing-lg;
+  text-align: center;
+}
+
+// Warning button (shift complete)
+.warning-btn {
+  background-color: vars.$warning-color;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: vars.$spacing-md vars.$spacing-lg;
+  font-size: 1rem;
+  font-weight: vars.$font-weight-medium;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 300px;
+  
+  &:hover, &:focus {
+    background-color: color.scale(vars.$warning-color, $lightness: -5%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+// App container - full height
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: vars.$light-color;
+  display: flex;
+  flex-direction: column;
+}
+
+// Main content area
+main {
+  flex: 1;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,44 @@
+@use 'variables' as vars;
+@use 'mixins' as mix;
+
+// Modal styles
+.modal {
+  display: none;
+  position: fixed;
+  z-index: vars.$z-index-modal;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: vars.$spacing-xl;
+  border-radius: vars.$border-radius;
+  max-width: 600px;
+  box-shadow: vars.$box-shadow-medium;
+  position: relative;
+  
+  @include mix.respond-to(md) {
+    width: 90%;
+    margin: 20% auto;
+  }
+}
+
+.close-modal {
+  position: absolute;
+  top: vars.$spacing-base;
+  right: vars.$spacing-base;
+  font-size: vars.$font-size-xl;
+  font-weight: vars.$font-weight-bold;
+  cursor: pointer;
+  color: vars.$gray-dark;
+  
+  &:hover {
+    color: vars.$dark-color;
+  }
+}
