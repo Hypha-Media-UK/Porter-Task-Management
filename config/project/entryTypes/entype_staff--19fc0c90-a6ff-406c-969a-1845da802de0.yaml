@@ -1,0 +1,67 @@
+color: null
+fieldLayouts:
+  c1d182f6-771d-485d-b545-7896892f39a2:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2025-03-27T13:08:35+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            includeInCards: false
+            inputType: null
+            instructions: null
+            label: 'First Name'
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            providesThumbs: false
+            readonly: false
+            required: true
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: afbbc8e8-fb49-42e0-8bb3-0e9a52cbf363
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-03-27T13:18:19+00:00'
+            elementCondition: null
+            fieldUid: dd26ef8a-39c6-4323-8d51-c0bb6a57f95d # Plain
+            handle: fd_surname
+            includeInCards: false
+            instructions: null
+            label: Surname
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8a30dbee-46cc-40c2-b958-1f19af548e7e
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: 975e9067-be7b-4322-bde4-cb273c461d21
+        userCondition: null
+handle: entype_staff
+hasTitleField: true
+icon: person
+name: Staff
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

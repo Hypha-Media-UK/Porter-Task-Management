@@ -1,0 +1,31 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 3e98e49d-374c-46d3-b44d-b816a22d798b # Buildings
+handle: buildings
+maxAuthors: 1
+name: Buildings
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
+    enabledByDefault: true
+    hasUrls: true
+    template: buildings/_entry.twig
+    uriFormat: 'buildings/{slug}'
+structure:
+  maxLevels: 1
+  uid: 4c0ee964-ac18-45f7-9d48-4cc4c6471b1f
+type: structure

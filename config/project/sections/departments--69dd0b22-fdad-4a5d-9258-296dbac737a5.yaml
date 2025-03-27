@@ -1,0 +1,31 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 30567af9-d3c8-4734-84f2-9cbece3ab7d2 # Departments
+handle: departments
+maxAuthors: 1
+name: Departments
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
+    enabledByDefault: true
+    hasUrls: true
+    template: departments/_entry.twig
+    uriFormat: 'departments/{slug}'
+structure:
+  maxLevels: 1
+  uid: 137548f4-7553-49c3-bf6d-032b94ba9c64
+type: structure

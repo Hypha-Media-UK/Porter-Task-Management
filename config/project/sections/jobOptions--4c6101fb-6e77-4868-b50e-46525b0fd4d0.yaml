@@ -1,0 +1,31 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 61cd436b-67c4-45ff-b404-9d5f0b6e380f # Job Options
+handle: jobOptions
+maxAuthors: 1
+name: 'Job Options'
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
+    enabledByDefault: true
+    hasUrls: true
+    template: job-options/_entry.twig
+    uriFormat: 'job-options/{slug}'
+structure:
+  maxLevels: 1
+  uid: ec3e39b8-68ae-452e-9107-59227a19fd73
+type: structure

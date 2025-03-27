@@ -1,0 +1,51 @@
+color: null
+fieldLayouts:
+  4b233e95-c5bb-4604-a15c-669e26fd1406:
+    tabs:
+      -
+        elementCondition: null
+        elements:
+          -
+            autocapitalize: true
+            autocomplete: false
+            autocorrect: true
+            class: null
+            dateAdded: '2025-03-27T13:22:48+00:00'
+            disabled: false
+            elementCondition: null
+            id: null
+            includeInCards: false
+            inputType: null
+            instructions: null
+            label: 'Job Type'
+            max: null
+            min: null
+            name: null
+            orientation: null
+            placeholder: null
+            providesThumbs: false
+            readonly: false
+            required: true
+            size: null
+            step: null
+            tip: null
+            title: null
+            type: craft\fieldlayoutelements\entries\EntryTitleField
+            uid: eb816a0d-1e4a-454d-b4b6-3e37648a782d
+            userCondition: null
+            warning: null
+            width: 100
+        name: Content
+        uid: f07ddb4b-a67e-4658-a97a-3d1ad15c6f8f
+        userCondition: null
+handle: ent_jobTypes
+hasTitleField: true
+icon: null
+name: 'Job Types'
+showSlugField: true
+showStatusField: true
+slugTranslationKeyFormat: null
+slugTranslationMethod: site
+titleFormat: null
+titleTranslationKeyFormat: null
+titleTranslationMethod: site

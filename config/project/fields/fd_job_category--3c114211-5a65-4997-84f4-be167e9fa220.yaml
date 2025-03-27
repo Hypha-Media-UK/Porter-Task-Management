@@ -1,0 +1,22 @@
+columnSuffix: null
+handle: fd_job_category
+instructions: null
+name: 'Job Category'
+searchable: false
+settings:
+  allowSelfRelations: false
+  branchLimit: null
+  maintainHierarchy: false
+  maxRelations: 1
+  minRelations: null
+  selectionLabel: null
+  showCardsInGrid: false
+  showSiteMenu: false
+  sources:
+    - 'section:7ba4adac-0649-4224-bdc2-faf8f232fd2c' # Job Categories
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: list
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Entries

@@ -1,0 +1,33 @@
+columnSuffix: null
+handle: fd_dropdown
+instructions: null
+name: Dropdown
+searchable: false
+settings:
+  customOptions: false
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - Pending
+        -
+          - value
+          - pending
+        -
+          - default
+          - ''
+    -
+      __assoc__:
+        -
+          - label
+          - Completed
+        -
+          - value
+          - completed
+        -
+          - default
+          - ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Dropdown

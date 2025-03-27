@@ -1,0 +1,31 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 552a4505-21bc-4931-8169-456df83a265b # Tasks
+handle: tasks
+maxAuthors: 1
+name: Tasks
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
+    enabledByDefault: true
+    hasUrls: true
+    template: tasks/_entry.twig
+    uriFormat: 'tasks/{slug}'
+structure:
+  maxLevels: 1
+  uid: 7e1040d2-b4a3-4a64-92ce-074ef0179f90
+type: structure

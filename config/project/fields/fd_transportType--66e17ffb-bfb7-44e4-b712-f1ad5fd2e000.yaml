@@ -1,0 +1,44 @@
+columnSuffix: null
+handle: fd_transportType
+instructions: null
+name: 'Transport Type'
+searchable: false
+settings:
+  customOptions: false
+  options:
+    -
+      __assoc__:
+        -
+          - label
+          - Chair
+        -
+          - value
+          - chair
+        -
+          - default
+          - ''
+    -
+      __assoc__:
+        -
+          - label
+          - Bed
+        -
+          - value
+          - bed
+        -
+          - default
+          - ''
+    -
+      __assoc__:
+        -
+          - label
+          - Stretcher
+        -
+          - value
+          - stretcher
+        -
+          - default
+          - ''
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Dropdown

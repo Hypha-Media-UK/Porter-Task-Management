@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<meta charset="utf-8"/>
+</head>
+<body>
+
+<h1 id="portertaskmanagement-nextsteps">Porter Task Management - Next Steps</h1>
+
+<p>Here&#8217;s a detailed, step-by-step guide for implementing the Craft CMS integration for your Porter Task Management app:</p>
+
+<h2 id="step1:createcategorygroups">Step 1: Create Category Groups</h2>
+
+<ol>
+<li>Log into the Craft CMS control panel</li>
+<li>Navigate to Settings → Categories</li>
+<li>Click &#8220;New Category Group&#8221;</li>
+<li>Create the Buildings Category Group:</li>
+</ol>
+
+<ul>
+<li> Name: Buildings</li>
+<li> Handle: buildings</li>
+<li> Max Levels: 1</li>
+<li> Enable &#8220;Default placement&#8221; as &#8220;As a root category&#8221;</li>
+<li> Site Settings: Enable for your site(s)</li>
+<li> Field Layout: Add only the Title field for now</li>
+<li> Save the category group</li>
+</ul>
+
+<ol>
+<li>Click &#8220;New Category Group&#8221; again</li>
+<li>Create the Departments Category Group:</li>
+</ol>
+
+<ul>
+<li> Name: Departments</li>
+<li> Handle: departments</li>
+<li> Max Levels: 1</li>
+<li> Site Settings: Enable for your site(s)</li>
+<li> Field Layout:
+
+<ul>
+<li> Add the Title field</li>
+<li> Create a new Categories field:</li>
+<li> Click &#8220;+ New Field&#8221;</li>
+<li> Field Name: Building</li>
+<li> Field Handle: building</li>
+<li> Field Type: Categories</li>
+<li> Category Group: Buildings</li>
+<li> Limit: 1 (each department belongs to one building)</li>
+<li> Check &#8220;Required&#8221;</li>
+<li> Save the field</li>
+</ul></li>
+<li> Save the category group</li>
+</ul>
+
+<ol>
+<li>Create the Job Types Category Group:</li>
+</ol>
+
+<ul>
+<li> Name: Job Types</li>
+<li> Handle: jobTypes</li>
+<li> Max Levels: 1</li>
+<li> Site Settings: Enable for your site(s)</li>
+<li> Field Layout:
+
+<ul>
+<li> Add the Title field</li>
+<li> Create a new Table field:</li>
+<li> Click &#8220;+ New Field&#8221;</li>
+<li> Field Name: Transport Options</li>
+<li> Field Handle: transportOptions</li>
+<li> Field Type: Table</li>
+<li> Add one column: &#8220;Option&#8221; (text)</li>
+<li> Save the field</li>
+</ul></li>
+<li> Save the category group</li>
+</ul>
+
+<ol>
+<li>Create the Job Categories Category Group:</li>
+</ol>
+
+<ul>
+<li> Name: Job Categories</li>
+<li> Handle: jobCategories</li>
+<li> Max Levels: 1</li>
+<li> Site Settings: Enable for your site(s)</li>
+<li> Field Layout:
+
+<ul>
+<li> Add the Title field</li>
+<li> Create a new Categories field:</li>
+<li> Click &#8220;+ New Field&#8221;</li>
+<li> Field Name: Allowed Types</li>
+<li> Field Handle: allowedTypes</li>
+<li> Field Type: Categories</li>
+<li> Category Group: Job Types</li>
+<li> Limit: No limit</li>
+<li> Check &#8220;Required&#8221;</li>
+<li> Save the field</li>
+</ul></li>
+<li> Save the category group</li>
+</ul>
+
+<h2 id="step2:createcustommoduleforporter">Step 2: Create Custom Module for Porter</h2>
+
+<ol>
+<li>Open your terminal/command line and navigate to your project root</li>
+<li>Run the command to create a new module:</li>
+</ol>
+
+<pre><code class="```bash">   ddev craft make module porter
+
+</code></pre>
+
+<ol>
+<li>This creates a baseline module structure in <code>modules/porter/</code></li>
+<li>Open <code>config/app.php</code> and verify the module is registered:</li>
+</ol>
+
+<pre><code class="```php">   return [
+       'modules' =&gt; [
+           'porter' =&gt; \modules\porter\Porter::class,
+       ],
+       'bootstrap' =&gt; ['porter'],
+   ];
+
+</code></pre>
+
+<h2 id="step3:createelementtypes">Step 3: Create Element Types</h2>
+
+<h3 id="createthestaffelementtype:">Create the Staff Element Type:</h3>
+
+<ol>
+<li>In <code>modules/porter/</code>, create a folder called <code>elements</code></li>
+<li>Create a file <code>elements/Staff.php</code>:</li>
+</ol>
+
+<pre><code class="```php">   &lt;?php
+   
+   namespace modules\porter\elements;
+   
+   use Craft;
+   use craft\base\Element;
+   use craft\elements\db\ElementQueryInterface;
+   use modules\porter\elements\db\StaffQuery;
+   
+   class Staff extends Element
+   {
+       // Properties
+       public ?string $name = null;
+       public ?string $email = null;
+       public bool $active = true;
+   
+       // Static methods
+       public static function displayName(): string
+       {
+           return 'Staff';
+       }
+       
+       public static function hasTitles(): bool
+       {
+           return true;
+       }
+       
+       public static function hasContent(): bool
+       {
+           return true;
+       }
+       
+       public static function find(): ElementQueryInterface
+       {
+           return new StaffQuery(static::class);
+       }
+       
+       public function getTitle(): string
+       {
+           return $this-&gt;name ?? '';
+       }
+       
+       // Lifecycle methods to be implemented
+   }
+
+</code></pre>
+
+<ol>
+<li>Create <code>elements/db/StaffQuery.php</code>:</li>
+</ol>
+
+<pre><code class="```php">   &lt;?php
+   
+   namespace modules\porter\elements\db;
+   
+   use craft\elements\db\ElementQuery;
+   use modules\porter\elements\Staff;
+   
+   class StaffQuery extends ElementQuery
+   {
+       public function active($value = true)
+       {
+           $this-&gt;subQuery-&gt;andWhere(['staff.active' =&gt; $value]);
+           return $this;
+       }
+       
+       protected function beforePrepare(): bool
+       {
+           $this-&gt;joinElementTable('porter_staff');
+           
+           $this-&gt;query-&gt;select([
+               'porter_staff.name',
+               'porter_staff.email',
+               'porter_staff.active',
+           ]);
+           
+           return parent::beforePrepare();
+       }
+   }
+
+</code></pre>
+
+<ol>
+<li>Create a folder <code>modules/porter/records</code></li>
+<li>Create <code>records/StaffRecord.php</code>:</li>
+</ol>
+
+<pre><code class="```php">   &lt;?php
+   
+   namespace modules\porter\records;
+   
+   use craft\db\ActiveRecord;
+   
+   class StaffRecord extends ActiveRecord
+   {
+       public static function tableName(): string
+       {
+           return '{{%porter_staff}}';
+       }
+   }
+
+</code></pre>
+
+<h3 id="createthetaskelementtype:">Create the Task Element Type:</h3>
+
+<ol>
+<li>Create <code>elements/Task.php</code> with appropriate properties for task management</li>
+<li>Create <code>elements/db/TaskQuery.php</code> to handle task-specific queries</li>
+<li>Create <code>records/TaskRecord.php</code> for database interaction</li>
+</ol>
+
+<h2 id="step4:createmigrationfordatabasetables">Step 4: Create Migration for Database Tables</h2>
+
+<ol>
+<li>Create a folder <code>modules/porter/migrations</code></li>
+<li>Create <code>migrations/Install.php</code>:</li>
+</ol>
+
+<pre><code class="```php">   &lt;?php
+   
+   namespace modules\porter\migrations;
+   
+   use Craft;
+   use craft\db\Migration;
+   
+   class Install extends Migration
+   {
+       public function safeUp(): bool
+       {
+           if ($this-&gt;createTables()) {
+               $this-&gt;createIndexes();
+               return true;
+           }
+           
+           return false;
+       }
+       
+       protected function createTables(): bool
+       {
+           $this-&gt;createTable('{{%porter_staff}}', [
+               'id' =&gt; $this-&gt;primaryKey(),
+               'name' =&gt; $this-&gt;string()-&gt;notNull(),
+               'email' =&gt; $this-&gt;string(),
+               'active' =&gt; $this-&gt;boolean()-&gt;defaultValue(true),
+               'dateCreated' =&gt; $this-&gt;dateTime()-&gt;notNull(),
+               'dateUpdated' =&gt; $this-&gt;dateTime()-&gt;notNull(),
+               'uid' =&gt; $this-&gt;uid(),
+           ]);
+           
+           $this-&gt;createTable('{{%porter_tasks}}', [
+               'id' =&gt; $this-&gt;primaryKey(),
+               'status' =&gt; $this-&gt;string()-&gt;notNull()-&gt;defaultValue('pending'),
+               'date' =&gt; $this-&gt;date()-&gt;notNull(),
+               'shift' =&gt; $this-&gt;string()-&gt;notNull(),
+               'timeReceived' =&gt; $this-&gt;time()-&gt;notNull(),
+               'jobCategoryId' =&gt; $this-&gt;integer(),
+               'fromDepartmentId' =&gt; $this-&gt;integer(),
+               'toDepartmentId' =&gt; $this-&gt;integer(),
+               'itemTypeId' =&gt; $this-&gt;integer(),
+               'transportType' =&gt; $this-&gt;string(),
+               'staffId' =&gt; $this-&gt;integer(),
+               'timeAllocated' =&gt; $this-&gt;time(),
+               'timeCompleted' =&gt; $this-&gt;time(),
+               'dateCreated' =&gt; $this-&gt;dateTime()-&gt;notNull(),
+               'dateUpdated' =&gt; $this-&gt;dateTime()-&gt;notNull(),
+               'uid' =&gt; $this-&gt;uid(),
+           ]);
+           
+           return true;
+       }
+       
+       protected function createIndexes(): void
+       {
+           $this-&gt;createIndex(null, '{{%porter_tasks}}', ['status']);
+           $this-&gt;createIndex(null, '{{%porter_tasks}}', ['date']);
+           $this-&gt;createIndex(null, '{{%porter_tasks}}', ['shift']);
+           $this-&gt;createIndex(null, '{{%porter_tasks}}', ['jobCategoryId']);
+           $this-&gt;createIndex(null, '{{%porter_tasks}}', ['fromDepartmentId']);
+           $this-&gt;createIndex(null, '{{%porter_tasks}}', ['toDepartmentId']);
+           $this-&gt;createIndex(null, '{{%porter_tasks}}', ['itemTypeId']);
+           $this-&gt;createIndex(null, '{{%porter_tasks}}', ['staffId']);
+       }
+       
+       public function safeDown(): bool
+       {
+           $this-&gt;dropTableIfExists('{{%porter_tasks}}');
+           $this-&gt;dropTableIfExists('{{%porter_staff}}');
+           
+           return true;
+       }
+   }
+
+</code></pre>
+
+<ol>
+<li>Add code to run the migration in your module&#8217;s <code>Porter.php</code> file:</li>
+</ol>
+
+<pre><code class="```php">   &lt;?php
+   
+   namespace modules\porter;
+   
+   use Craft;
+   use craft\events\RegisterUrlRulesEvent;
+   use craft\web\UrlManager;
+   use modules\porter\elements\Staff;
+   use modules\porter\elements\Task;
+   use yii\base\Event;
+   use yii\base\Module;
+   
+   class Porter extends Module
+   {
+       public function init()
+       {
+           parent::init();
+           
+           // Register elements
+           Craft::$app-&gt;elements-&gt;registerElementTypes([
+               Staff::class,
+               Task::class,
+           ]);
+           
+           // Register controllers for API actions
+           $this-&gt;controllerNamespace = 'modules\\porter\\controllers';
+           
+           // Register URL rules
+           Event::on(
+               UrlManager::class,
+               UrlManager::EVENT_REGISTER_SITE_URL_RULES,
+               function(RegisterUrlRulesEvent $event) {
+                   $event-&gt;rules['tasks/new'] = 'porter/tasks/new';
+                   $event-&gt;rules['tasks/pending'] = 'porter/tasks/pending';
+                   $event-&gt;rules['tasks/completed'] = 'porter/tasks/completed';
+                   $event-&gt;rules['tasks/report'] = 'porter/tasks/report';
+               }
+           );
+       }
+   }
+
+</code></pre>
+
+<ol>
+<li>Run the migration to create database tables:</li>
+</ol>
+
+<pre><code class="```bash">   ddev craft migrate/up --interactive=0
+
+</code></pre>
+
+<h2 id="step5:populateinitialdata">Step 5: Populate Initial Data</h2>
+
+<ol>
+<li>Create categories for Buildings:</li>
+</ol>
+
+<ul>
+<li> Navigate to Categories → Buildings in the control panel</li>
+<li> Add each building (Main Hospital, Outpatient Center, etc.)</li>
+</ul>
+
+<ol>
+<li>Create categories for Departments:</li>
+</ol>
+
+<ul>
+<li> Navigate to Categories → Departments</li>
+<li> Add each department, selecting its associated building</li>
+</ul>
+
+<ol>
+<li>Create categories for Job Types:</li>
+</ol>
+
+<ul>
+<li> Navigate to Categories → Job Types</li>
+<li> Add each job type</li>
+<li> For &#8220;Patient Transfer&#8221;, add transport options in the table field</li>
+</ul>
+
+<ol>
+<li>Create categories for Job Categories:</li>
+</ol>
+
+<ul>
+<li> Navigate to Categories → Job Categories</li>
+<li> Add each category (Routine, Urgent, Emergency, Staff Request)</li>
+<li> Select allowed job types for each category</li>
+</ul>
+
+<ol>
+<li>Programmatically create staff entries:</li>
+</ol>
+
+<pre><code class="```php">   &lt;?php
+   // modules/porter/scripts/seedStaff.php
+   
+   use modules\porter\elements\Staff;
+   
+   $staffData = [
+       ['name' =&gt; 'John Smith', 'email' =&gt; 'john.smith@example.com'],
+       ['name' =&gt; 'Sarah Johnson', 'email' =&gt; 'sarah.johnson@example.com'],
+       // Add more staff members from your mock data
+   ];
+   
+   foreach ($staffData as $data) {
+       $staff = new Staff();
+       $staff-&gt;name = $data['name'];
+       $staff-&gt;email = $data['email'] ?? null;
+       $staff-&gt;active = true;
+       
+       if (!Craft::$app-&gt;elements-&gt;saveElement($staff)) {
+           echo &quot;Couldn't save staff: &quot; . print_r($staff-&gt;getErrors(), true) . &quot;\n&quot;;
+       }
+   }
+
+</code></pre>
+
+<ol>
+<li>Run the staff seeding script from your controller or create a console command</li>
+</ol>
+
+<h2 id="step6:createcontrolleractions">Step 6: Create Controller Actions</h2>
+
+<ol>
+<li>Create a folder <code>modules/porter/controllers</code></li>
+<li>Create <code>controllers/TasksController.php</code>:</li>
+</ol>
+
+<pre><code class="```php">   &lt;?php
+   
+   namespace modules\porter\controllers;
+   
+   use Craft;
+   use craft\web\Controller;
+   use modules\porter\elements\Task;
+   use yii\web\Response;
+   
+   class TasksController extends Controller
+   {
+       // Allow access to specific actions if needed
+       protected array|bool|int $allowAnonymous = self::ALLOW_ANONYMOUS_NEVER;
+       
+       // Action to display the new task form
+       public function actionNew(): Response
+       {
+           return $this-&gt;renderTemplate('porter/tasks/new');
+       }
+       
+       // Action to display pending tasks
+       public function actionPending(): Response
+       {
+           return $this-&gt;renderTemplate('porter/tasks/pending');
+       }
+       
+       // Action to display completed tasks
+       public function actionCompleted(): Response
+       {
+           return $this-&gt;renderTemplate('porter/tasks/completed');
+       }
+       
+       // Action to display shift report
+       public function actionReport(): Response
+       {
+           return $this-&gt;renderTemplate('porter/tasks/report');
+       }
+       
+       // API action to get pending tasks
+       public function actionGetPendingTasks(): Response
+       {
+           $this-&gt;requireAcceptsJson();
+           
+           $date = Craft::$app-&gt;request-&gt;getQueryParam('date');
+           $shift = Craft::$app-&gt;request-&gt;getQueryParam('shift');
+           
+           // TODO: Implement query to get pending tasks
+           
+           return $this-&gt;asJson([
+               'success' =&gt; true,
+               'tasks' =&gt; []
+           ]);
+       }
+       
+       // API action to get completed tasks
+       public function actionGetCompletedTasks(): Response
+       {
+           $this-&gt;requireAcceptsJson();
+           
+           $date = Craft::$app-&gt;request-&gt;getQueryParam('date');
+           $shift = Craft::$app-&gt;request-&gt;getQueryParam('shift');
+           
+           // TODO: Implement query to get completed tasks
+           
+           return $this-&gt;asJson([
+               'success' =&gt; true,
+               'tasks' =&gt; []
+           ]);
+       }
+       
+       // API action to create a task
+       public function actionCreateTask(): Response
+       {
+           $this-&gt;requirePostRequest();
+           
+           // TODO: Implement task creation
+           
+           if (Craft::$app-&gt;request-&gt;getAcceptsJson()) {
+               return $this-&gt;asJson([
+                   'success' =&gt; true,
+                   'task' =&gt; []
+               ]);
+           }
+           
+           return $this-&gt;redirectToPostedUrl();
+       }
+       
+       // Other actions for task management
+   }
+
+</code></pre>
+
+<h2 id="step7:createtemplates">Step 7: Create Templates</h2>
+
+<ol>
+<li>Create a folder <code>templates/porter/tasks</code></li>
+<li>Create <code>templates/porter/tasks/new.twig</code>:</li>
+</ol>
+
+<pre><code class="```twig">   {% extends &quot;_layout.twig&quot; %}
+   
+   {% block title %}New Task{% endblock %}
+   
+   {% block content %}
+   &lt;div class=&quot;new-task-form&quot;&gt;
+       &lt;form method=&quot;post&quot; action=&quot;&quot; accept-charset=&quot;UTF-8&quot;&gt;
+           {{ csrfInput() }}
+           &lt;input type=&quot;hidden&quot; name=&quot;action&quot; value=&quot;porter/tasks/create-task&quot;&gt;
+           &lt;input type=&quot;hidden&quot; name=&quot;redirect&quot; value=&quot;tasks/pending&quot;&gt;
+           
+           &lt;div class=&quot;form-group&quot;&gt;
+               &lt;label for=&quot;time-received&quot;&gt;Time Received:&lt;/label&gt;
+               &lt;input type=&quot;time&quot; id=&quot;time-received&quot; name=&quot;timeReceived&quot; value=&quot;{{ now|date('H:i') }}&quot; required&gt;
+           &lt;/div&gt;
+           
+           &lt;div class=&quot;form-group&quot;&gt;
+               &lt;label for=&quot;job-category&quot;&gt;Job Category:&lt;/label&gt;
+               &lt;select id=&quot;job-category&quot; name=&quot;jobCategoryId&quot; required&gt;
+                   &lt;option value=&quot;&quot;&gt;Select Job Category&lt;/option&gt;
+                   {% for category in craft.categories.group('jobCategories').all() %}
+                       &lt;option value=&quot;{{ category.id }}&quot;&gt;{{ category.title }}&lt;/option&gt;
+                   {% endfor %}
+               &lt;/select&gt;
+           &lt;/div&gt;
+           
+           &lt;!-- Add remaining form fields --&gt;
+           
+           &lt;div class=&quot;form-actions&quot;&gt;
+               &lt;button type=&quot;submit&quot; name=&quot;status&quot; value=&quot;pending&quot; class=&quot;secondary-btn&quot;&gt;Save as Pending&lt;/button&gt;
+               &lt;button type=&quot;submit&quot; name=&quot;status&quot; value=&quot;completed&quot; class=&quot;primary-btn&quot;&gt;Mark as Complete&lt;/button&gt;
+           &lt;/div&gt;
+       &lt;/form&gt;
+   &lt;/div&gt;
+   {% endblock %}
+   
+   {% block scripts %}
+   &lt;script&gt;
+   // Add JavaScript for form interactions
+   &lt;/script&gt;
+   {% endblock %}
+
+</code></pre>
+
+<ol>
+<li>Create templates for other views (pending tasks, completed tasks, report)</li>
+</ol>
+
+<h2 id="step8:updatejavascriptforapiinteraction">Step 8: Update JavaScript for API Interaction</h2>
+
+<ol>
+<li>Create <code>web/src/js/craft-api.js</code>:</li>
+</ol>
+
+<pre><code class="```javascript">   // craft-api.js
+   class PorterApi {
+       // Get pending tasks for a date and shift
+       async getPendingTasks(date, shift) {
+           const response = await fetch(`/actions/porter/tasks/get-pending-tasks?date=${date}&amp;shift=${shift}`);
+           return await response.json();
+       }
+       
+       // Get completed tasks for a date and shift
+       async getCompletedTasks(date, shift) {
+           const response = await fetch(`/actions/porter/tasks/get-completed-tasks?date=${date}&amp;shift=${shift}`);
+           return await response.json();
+       }
+       
+       // Create a new task
+       async createTask(taskData) {
+           const csrfToken = document.querySelector('meta[name=&quot;csrf-token&quot;]').getAttribute('content');
+           
+           const response = await fetch('/actions/porter/tasks/create-task', {
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json',
+                   'X-CSRF-Token': csrfToken
+               },
+               body: JSON.stringify(taskData)
+           });
+           
+           return await response.json();
+       }
+       
+       // Add other API methods
+   }
+   
+   // Export a singleton instance
+   window.porterApi = new PorterApi();
+
+</code></pre>
+
+<ol>
+<li>Update <code>templates/_layout.twig</code> to include the new API script:</li>
+</ol>
+
+<pre><code class="```twig">   &lt;script src=&quot;{{ alias('@web') }}/src/js/craft-api.js&quot;&gt;&lt;/script&gt;
+
+</code></pre>
+
+<h2 id="step9:testanddebug">Step 9: Test and Debug</h2>
+
+<ol>
+<li>Test creating categories in the admin</li>
+<li>Test staff element creation</li>
+<li>Test task creation and management</li>
+<li>Debug any issues with form submissions or API calls</li>
+</ol>
+
+<p>This step-by-step guide should help you implement the Craft CMS integration for the Porter Task Management application. Each step builds on the previous one, gradually constructing the complete system.</p>
+
+</body>
+</html>
+

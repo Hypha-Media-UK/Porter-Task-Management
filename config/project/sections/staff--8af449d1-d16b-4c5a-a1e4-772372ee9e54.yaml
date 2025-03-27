@@ -1,0 +1,31 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 19fc0c90-a6ff-406c-969a-1845da802de0 # Staff
+handle: staff
+maxAuthors: 1
+name: Staff
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
+    enabledByDefault: true
+    hasUrls: true
+    template: staff/_entry.twig
+    uriFormat: 'staff/{slug}'
+structure:
+  maxLevels: 1
+  uid: a3e01e65-901b-4892-ae8a-6b08f924be9d
+type: structure

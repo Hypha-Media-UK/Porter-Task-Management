@@ -69,11 +69,92 @@
       "oAP" : "\/craft",
       "oF" : 1
     },
+    "\/craft-implementation-plan.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/craft-implementation-plan.html",
+      "oF" : 0
+    },
+    "\/craft-implementation-plan.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/craft-implementation-plan.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
+    "\/craft-structure.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/craft-structure.html",
+      "oF" : 0
+    },
+    "\/craft-structure.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/craft-structure.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
+    },
     "\/data" : {
       "ft" : 65536,
       "oA" : 1,
       "oAP" : "\/data",
       "oF" : 0
+    },
+    "\/next-steps.html" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/next-steps.html",
+      "oF" : 0
+    },
+    "\/next-steps.md" : {
+      "cB" : 0,
+      "cS" : 0,
+      "eF" : 1,
+      "eL" : 1,
+      "ema" : 1,
+      "eSQ" : 1,
+      "ft" : 4096,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/next-steps.html",
+      "oF" : 0,
+      "oFM" : 0,
+      "oS" : 0,
+      "pHT" : 0,
+      "pME" : 1,
+      "rFN" : 0,
+      "uCM" : 0
     },
     "\/README.html" : {
       "cB" : 0,
@@ -511,6 +592,61 @@
       "oAP" : "\/web\/cpresources\/7dec7d46\/FeedWidget.js.map",
       "oF" : 0
     },
+    "\/web\/cpresources\/8ccfb586\/css\/app.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/8ccfb586\/css\/app-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/web\/cpresources\/8ccfb586\/css\/app.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/8ccfb586\/css\/app.css.map",
+      "oF" : 0
+    },
+    "\/web\/cpresources\/8ccfb586\/js\/app.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/8ccfb586\/js\/app-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/web\/cpresources\/8ccfb586\/js\/app.js.LICENSE.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/8ccfb586\/js\/app.js.LICENSE.txt",
+      "oF" : 0
+    },
+    "\/web\/cpresources\/8ccfb586\/js\/app.js.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/8ccfb586\/js\/app.js.map",
+      "oF" : 0
+    },
+    "\/web\/cpresources\/8ccfb586\/manifest.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/web\/cpresources\/8ccfb586\/manifest-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
+    },
     "\/web\/cpresources\/9d41f679\/garnish.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -626,6 +762,25 @@
       "plM" : 52780316221407,
       "prP" : 0
     },
+    "\/web\/cpresources\/66c92af4\/vue.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/66c92af4\/vue-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/web\/cpresources\/66c92af4\/vue.js.LICENSE.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/66c92af4\/vue.js.LICENSE.txt",
+      "oF" : 0
+    },
     "\/web\/cpresources\/72e9f2af\/velocity.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -704,6 +859,47 @@
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
+    },
+    "\/web\/cpresources\/1079d902\/htmx.min.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/1079d902\/htmx.min-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/web\/cpresources\/4457da7a\/jquery.timepicker.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/4457da7a\/jquery.timepicker-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/web\/cpresources\/6691daab\/editsection.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/6691daab\/editsection-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/web\/cpresources\/6691daab\/editsection.js.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/6691daab\/editsection.js.map",
+      "oF" : 0
     },
     "\/web\/cpresources\/797579df\/datepicker-af.js" : {
       "bF" : 0,
@@ -1560,6 +1756,25 @@
       "sC" : 3,
       "tS" : 0
     },
+    "\/web\/cpresources\/d8689c31\/ConditionBuilder.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/d8689c31\/ConditionBuilder-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/web\/cpresources\/d8689c31\/ConditionBuilder.js.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/d8689c31\/ConditionBuilder.js.map",
+      "oF" : 0
+    },
     "\/web\/cpresources\/dbeff465\/RecentEntriesWidget.js" : {
       "bF" : 0,
       "ft" : 64,
@@ -2342,6 +2557,33 @@
       "oAP" : "\/web\/cpresources\/e555b60b\/UpdatesWidget.js.map",
       "oF" : 0
     },
+    "\/web\/cpresources\/e8169552\/fieldsettings.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/e8169552\/fieldsettings-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/web\/cpresources\/e8169552\/fieldsettings.js.LICENSE.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/e8169552\/fieldsettings.js.LICENSE.txt",
+      "oF" : 0
+    },
+    "\/web\/cpresources\/e8169552\/fieldsettings.js.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/e8169552\/fieldsettings.js.map",
+      "oF" : 0
+    },
     "\/web\/cpresources\/eddd15d6\/cp.css" : {
       "aP" : 1,
       "bl" : 0,
@@ -2410,6 +2652,101 @@
       "oF" : 0,
       "sC" : 3,
       "tS" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/css\/app.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/css\/app-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/css\/app.css.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/css\/app.css.map",
+      "oF" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/images\/cloud.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/images\/cloud.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/images\/craft-mask.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/images\/craft-mask.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/images\/craft.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/images\/craft.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/images\/graphql.svg" : {
+      "ft" : 2097152,
+      "miP" : 0,
+      "oA" : 2,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/images\/graphql.svg",
+      "oF" : 0,
+      "opt" : 0,
+      "plM" : 52780316221407,
+      "prP" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/js\/app.js" : {
+      "bF" : 0,
+      "ft" : 64,
+      "ma" : 0,
+      "mi" : 1,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/js\/app-min.js",
+      "oF" : 0,
+      "sC" : 3,
+      "tS" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/js\/app.js.LICENSE.txt" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/js\/app.js.LICENSE.txt",
+      "oF" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/js\/app.js.map" : {
+      "cB" : 0,
+      "ft" : 8192,
+      "hM" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/js\/app.js.map",
+      "oF" : 0
+    },
+    "\/web\/cpresources\/f6505fe7\/manifest.json" : {
+      "ft" : 524288,
+      "oA" : 1,
+      "oAP" : "\/web\/cpresources\/f6505fe7\/manifest-min.json",
+      "oF" : 0,
+      "oO" : 1,
+      "oS" : 1
     },
     "\/web\/cpresources\/f47677f0\/css\/tailwind_reset.css" : {
       "aP" : 1,
@@ -3274,6 +3611,18 @@
       "ma" : 0,
       "oA" : 0,
       "oAP" : "\/web\/src\/css\/print-min.css",
+      "oF" : 0,
+      "pg" : 0
+    },
+    "\/web\/src\/css\/simple-min.css" : {
+      "aP" : 1,
+      "bl" : 0,
+      "ci" : 0,
+      "co" : 0,
+      "ft" : 16,
+      "ma" : 0,
+      "oA" : 0,
+      "oAP" : "\/web\/src\/css\/simple-min-min.css",
       "oF" : 0,
       "pg" : 0
     },

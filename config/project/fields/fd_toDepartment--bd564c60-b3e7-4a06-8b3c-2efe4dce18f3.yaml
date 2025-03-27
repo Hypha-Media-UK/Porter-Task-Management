@@ -1,0 +1,22 @@
+columnSuffix: null
+handle: fd_toDepartment
+instructions: null
+name: 'To Department'
+searchable: false
+settings:
+  allowSelfRelations: false
+  branchLimit: null
+  maintainHierarchy: false
+  maxRelations: 1
+  minRelations: null
+  selectionLabel: null
+  showCardsInGrid: false
+  showSiteMenu: false
+  sources:
+    - 'section:69dd0b22-fdad-4a5d-9258-296dbac737a5' # Departments
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: list
+translationKeyFormat: null
+translationMethod: none
+type: craft\fields\Entries

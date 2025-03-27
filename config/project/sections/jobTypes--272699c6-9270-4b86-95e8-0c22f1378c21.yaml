@@ -1,0 +1,31 @@
+defaultPlacement: end
+enableVersioning: true
+entryTypes:
+  -
+    uid: 0d29dd76-d6c5-4fc1-94e2-2ba179722665 # Job Types
+handle: jobTypes
+maxAuthors: 1
+name: 'Job Types'
+previewTargets:
+  -
+    __assoc__:
+      -
+        - label
+        - 'Primary entry page'
+      -
+        - urlFormat
+        - '{url}'
+      -
+        - refresh
+        - '1'
+propagationMethod: all
+siteSettings:
+  a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
+    enabledByDefault: true
+    hasUrls: true
+    template: job-types/_entry.twig
+    uriFormat: 'job-types/{slug}'
+structure:
+  maxLevels: 1
+  uid: c137efb5-3440-4c47-86b3-f8ec46a83531
+type: structure
