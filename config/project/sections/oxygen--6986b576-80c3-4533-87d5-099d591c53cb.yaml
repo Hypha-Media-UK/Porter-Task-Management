@@ -2,10 +2,10 @@ defaultPlacement: end
 enableVersioning: true
 entryTypes:
   -
-    uid: 0d29dd76-d6c5-4fc1-94e2-2ba179722665 # Job Types
-handle: jobTypes
+    uid: 024e7ea3-9daf-4039-a7d9-f128c7efa662 # Gases
+handle: oxygen
 maxAuthors: 1
-name: 'Job Types'
+name: Oxygen
 previewTargets:
   -
     __assoc__:
@@ -23,9 +23,9 @@ siteSettings:
   a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
     enabledByDefault: true
     hasUrls: true
-    template: job-types/_entry.twig
-    uriFormat: 'job-types/{slug}'
+    template: oxygen/_entry.twig
+    uriFormat: 'oxygen/{slug}'
 structure:
   maxLevels: 1
-  uid: c137efb5-3440-4c47-86b3-f8ec46a83531
+  uid: fa0b4cb8-cd61-4d08-ac18-f652fcd34916
 type: structure

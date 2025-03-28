@@ -1,6 +1,6 @@
 color: null
 fieldLayouts:
-  f5c01a58-5cb2-422e-a942-f742027e0153:
+  d0d9dd94-3bfb-419c-a1a8-183af97759be:
     tabs:
       -
         elementCondition: null
@@ -10,14 +10,14 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
-            dateAdded: '2025-03-27T13:21:15+00:00'
+            dateAdded: '2025-03-27T16:08:42+00:00'
             disabled: false
             elementCondition: null
             id: null
             includeInCards: false
             inputType: null
             instructions: null
-            label: 'Job Category'
+            label: 'Sample Type'
             max: null
             min: null
             name: null
@@ -31,17 +31,17 @@ fieldLayouts:
             tip: null
             title: null
             type: craft\fieldlayoutelements\entries\EntryTitleField
-            uid: 383f6918-20fe-426b-9f50-faa0c9b66f87
+            uid: 8d03f861-ecfa-493f-88a9-105f768f51b0
             userCondition: null
             warning: null
             width: 100
         name: Content
-        uid: 99e7b8c8-4f29-4262-8f46-3b423be9cf8a
+        uid: b455db3b-2db5-4a0e-9134-699ba7f9fe3c
         userCondition: null
-handle: ent_jobCategories
+handle: ent_samples
 hasTitleField: true
-icon: layer-group
-name: 'Job Categories'
+icon: vial
+name: Samples
 showSlugField: true
 showStatusField: true
 slugTranslationKeyFormat: null

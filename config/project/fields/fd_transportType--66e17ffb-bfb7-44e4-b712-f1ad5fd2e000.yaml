@@ -4,41 +4,19 @@ instructions: null
 name: 'Transport Type'
 searchable: false
 settings:
-  customOptions: false
-  options:
-    -
-      __assoc__:
-        -
-          - label
-          - Chair
-        -
-          - value
-          - chair
-        -
-          - default
-          - ''
-    -
-      __assoc__:
-        -
-          - label
-          - Bed
-        -
-          - value
-          - bed
-        -
-          - default
-          - ''
-    -
-      __assoc__:
-        -
-          - label
-          - Stretcher
-        -
-          - value
-          - stretcher
-        -
-          - default
-          - ''
+  allowSelfRelations: false
+  branchLimit: null
+  maintainHierarchy: false
+  maxRelations: null
+  minRelations: null
+  selectionLabel: null
+  showCardsInGrid: false
+  showSiteMenu: true
+  sources:
+    - 'section:1f97b433-8801-4979-a2fe-aeaac36fe939' # Transport Options
+  targetSiteId: null
+  validateRelatedElements: false
+  viewMode: list
 translationKeyFormat: null
 translationMethod: none
-type: craft\fields\Dropdown
+type: craft\fields\Entries

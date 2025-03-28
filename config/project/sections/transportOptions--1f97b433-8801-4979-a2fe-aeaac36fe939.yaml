@@ -2,10 +2,10 @@ defaultPlacement: end
 enableVersioning: true
 entryTypes:
   -
-    uid: 234179bc-9833-430f-b5d1-5328981b44b1 # Job Categories
-handle: jobCategories
+    uid: 066b15d3-420c-47dc-8971-7f87fbfafde1 # Transport Options
+handle: transportOptions
 maxAuthors: 1
-name: 'Job Categories'
+name: 'Transport Options'
 previewTargets:
   -
     __assoc__:
@@ -23,9 +23,9 @@ siteSettings:
   a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
     enabledByDefault: true
     hasUrls: true
-    template: job-categories/_entry.twig
-    uriFormat: 'job-categories/{slug}'
+    template: transport-options/_entry.twig
+    uriFormat: 'transport-options/{slug}'
 structure:
-  maxLevels: 2
-  uid: 244cd928-08c3-4d2b-97bb-b61ee2dab757
+  maxLevels: 1
+  uid: 3d3c44d4-8d95-4372-a095-cf8527ec8872
 type: structure

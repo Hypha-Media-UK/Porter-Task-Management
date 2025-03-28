@@ -1,10 +1,208 @@
 color: null
 fieldLayouts:
   8520c5bb-58da-4bec-bcea-a6c1ecefc154:
+    cardView:
+      - 'layoutElement:89544c26-40e6-42c6-86c7-d71b926e239d'
+      - 'layoutElement:dd54d586-582a-49b5-9113-5d1b72aea80c'
+      - 'layoutElement:2676a680-755c-4c35-9b96-bc3b1e7548cd'
+      - 'layoutElement:dac9043a-cf6f-41f4-8f62-6953062c0b51'
+      - 'layoutElement:8baa5fa9-6655-4a81-b9ba-73e2b7cc467e'
     tabs:
       -
         elementCondition: null
         elements:
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: 3c114211-5a65-4997-84f4-be167e9fa220 # Job Category
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8531478d-1bd1-47a8-a853-e766117b0a40
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
+            handle: fd_time_received
+            includeInCards: true
+            instructions: null
+            label: 'Time Received'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: dd54d586-582a-49b5-9113-5d1b72aea80c
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
+            handle: fd_time_allocated
+            includeInCards: true
+            instructions: null
+            label: 'Time Allocated'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 2676a680-755c-4c35-9b96-bc3b1e7548cd
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: 01b0afb7-da30-4504-b311-b07bbdaccf74 # Item Type
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 250a5a55-e223-49ef-b24f-bd0c7cc3dd4c
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: f9aad2b1-7e69-481b-8b97-3ce60fcdd0db # From Department
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: a2014686-99cb-4ce3-b87a-26cda4d5cbdf
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: bd564c60-b3e7-4a06-8b3c-2efe4dce18f3 # To Department
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 2042d739-363d-4621-902d-6fb8e45e5304
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: 66e17ffb-bfb7-44e4-b712-f1ad5fd2e000 # Transport Type
+            handle: null
+            includeInCards: true
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 8baa5fa9-6655-4a81-b9ba-73e2b7cc467e
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: '2025-03-28T08:38:57+00:00'
+            elementCondition: null
+            fieldUid: dd26ef8a-39c6-4323-8d51-c0bb6a57f95d # Plain
+            handle: fd_bed_number
+            includeInCards: false
+            instructions: null
+            label: 'Bed Number'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 030e0f23-eb5c-4ee0-b5a7-d9a72929852f
+            userCondition: null
+            warning: null
+            width: 25
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: b4a6b8df-f8b3-4d4b-8baf-419b69270987 # Staff Member
+            handle: null
+            includeInCards: true
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 89544c26-40e6-42c6-86c7-d71b926e239d
+            userCondition: null
+            warning: null
+            width: 100
+          -
+            dateAdded: '2025-03-28T08:05:46+00:00'
+            elementCondition: null
+            fieldUid: 5b89d1c7-a426-4b3f-b700-46e4f8e60b8b # Status
+            handle: fd_status
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 49837e15-7d9b-430a-bfa0-22810d2dec6d
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
+            handle: fd_time_completed
+            includeInCards: true
+            instructions: null
+            label: 'Time Completed'
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: dac9043a-cf6f-41f4-8f62-6953062c0b51
+            userCondition: null
+            warning: null
+            width: 50
+          -
+            dateAdded: '2025-03-27T13:42:59+00:00'
+            elementCondition: null
+            fieldUid: e46fd863-907c-44f3-a745-dd0b4fa995a8 # Notes
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: 1c9b3e93-b86c-482d-b5d2-280e74dd567e
+            userCondition: null
+            warning: null
+            width: 100
           -
             autocapitalize: true
             autocomplete: false
@@ -35,214 +233,6 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 26e258b1-8cb4-4f3c-a49e-5a3bd1f771cc # Dropdown
-            handle: fd_status
-            includeInCards: false
-            instructions: null
-            label: Status
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: b0528619-0444-48b9-b0f8-b7307b9edc89
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 93fb37a4-7aca-4863-9d25-45cdcad333bc # Date
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 1de4c62c-e66d-413d-addd-55ac9cf8bee0
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 26e258b1-8cb4-4f3c-a49e-5a3bd1f771cc # Dropdown
-            handle: fd_shift
-            includeInCards: false
-            instructions: null
-            label: Shift
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: c0c16238-a7b3-48c8-af32-522cbddeb0a9
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
-            handle: fd_time_allocated
-            includeInCards: false
-            instructions: null
-            label: 'Time Allocated'
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 2676a680-755c-4c35-9b96-bc3b1e7548cd
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
-            handle: fd_time_received
-            includeInCards: false
-            instructions: null
-            label: 'Time Received'
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: dd54d586-582a-49b5-9113-5d1b72aea80c
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 1433d618-7471-4baf-97ab-0f99412d4937 # Time
-            handle: fd_time_completed
-            includeInCards: false
-            instructions: null
-            label: 'Time Completed'
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: dac9043a-cf6f-41f4-8f62-6953062c0b51
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 3c114211-5a65-4997-84f4-be167e9fa220 # Job Category
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 8531478d-1bd1-47a8-a853-e766117b0a40
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: f9aad2b1-7e69-481b-8b97-3ce60fcdd0db # From Department
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: a2014686-99cb-4ce3-b87a-26cda4d5cbdf
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: bd564c60-b3e7-4a06-8b3c-2efe4dce18f3 # To Department
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 2042d739-363d-4621-902d-6fb8e45e5304
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 01b0afb7-da30-4504-b311-b07bbdaccf74 # Item Type
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 250a5a55-e223-49ef-b24f-bd0c7cc3dd4c
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: 66e17ffb-bfb7-44e4-b712-f1ad5fd2e000 # Transport Type
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 8baa5fa9-6655-4a81-b9ba-73e2b7cc467e
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: b4a6b8df-f8b3-4d4b-8baf-419b69270987 # Staff Member
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 89544c26-40e6-42c6-86c7-d71b926e239d
-            userCondition: null
-            warning: null
-            width: 100
-          -
-            dateAdded: '2025-03-27T13:42:59+00:00'
-            elementCondition: null
-            fieldUid: e46fd863-907c-44f3-a745-dd0b4fa995a8 # Notes
-            handle: null
-            includeInCards: false
-            instructions: null
-            label: null
-            providesThumbs: false
-            required: false
-            tip: null
-            type: craft\fieldlayoutelements\CustomField
-            uid: 1c9b3e93-b86c-482d-b5d2-280e74dd567e
-            userCondition: null
-            warning: null
-            width: 100
         name: Content
         uid: b53668b5-aa2b-4fa5-acf1-54fa2eee4ffc
         userCondition: null
@@ -254,6 +244,6 @@ showSlugField: true
 showStatusField: true
 slugTranslationKeyFormat: null
 slugTranslationMethod: site
-titleFormat: null
+titleFormat: '{fd_job_category} {fd_item_type}'
 titleTranslationKeyFormat: null
 titleTranslationMethod: site

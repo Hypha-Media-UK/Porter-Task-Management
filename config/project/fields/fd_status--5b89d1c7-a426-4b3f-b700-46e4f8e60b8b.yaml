@@ -1,7 +1,7 @@
 columnSuffix: null
-handle: fd_dropdown
+handle: fd_status
 instructions: null
-name: Dropdown
+name: Status
 searchable: false
 settings:
   customOptions: false

@@ -11,9 +11,12 @@ settings:
   minRelations: null
   selectionLabel: null
   showCardsInGrid: false
-  showSiteMenu: false
+  showSiteMenu: true
   sources:
-    - 'section:272699c6-9270-4b86-95e8-0c22f1378c21' # Job Types
+    - 'section:4c6101fb-6e77-4868-b50e-46525b0fd4d0' # General Items
+    - 'section:6986b576-80c3-4533-87d5-099d591c53cb' # Oxygen
+    - 'section:f50e7600-0a56-4e2b-84e9-446a4a5866c3' # Pathology
+    - 'section:6833053b-93f2-4a3b-8af9-c2cc5ef8ef6a' # Samples
   targetSiteId: null
   validateRelatedElements: false
   viewMode: list

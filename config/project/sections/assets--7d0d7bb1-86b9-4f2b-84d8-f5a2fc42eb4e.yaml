@@ -2,10 +2,10 @@ defaultPlacement: end
 enableVersioning: true
 entryTypes:
   -
-    uid: 61cd436b-67c4-45ff-b404-9d5f0b6e380f # Job Options
-handle: jobOptions
+    uid: 29b2392c-1769-4679-be79-9597e31b86ab # Assets
+handle: assets
 maxAuthors: 1
-name: 'Job Options'
+name: Assets
 previewTargets:
   -
     __assoc__:
@@ -23,9 +23,9 @@ siteSettings:
   a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
     enabledByDefault: true
     hasUrls: true
-    template: job-options/_entry.twig
-    uriFormat: 'job-options/{slug}'
+    template: assets/_entry.twig
+    uriFormat: 'assets/{slug}'
 structure:
   maxLevels: 1
-  uid: ec3e39b8-68ae-452e-9107-59227a19fd73
+  uid: cef5d341-b4ca-4d5e-b5b4-64496be5c3df
 type: structure

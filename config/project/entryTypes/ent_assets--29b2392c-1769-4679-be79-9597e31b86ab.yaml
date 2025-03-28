@@ -1,6 +1,6 @@
 color: null
 fieldLayouts:
-  f5c01a58-5cb2-422e-a942-f742027e0153:
+  8c66e3c8-51e0-4758-b1cf-98c2cc29400a:
     tabs:
       -
         elementCondition: null
@@ -10,14 +10,14 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
-            dateAdded: '2025-03-27T13:21:15+00:00'
+            dateAdded: '2025-03-28T07:52:26+00:00'
             disabled: false
             elementCondition: null
             id: null
             includeInCards: false
             inputType: null
             instructions: null
-            label: 'Job Category'
+            label: Asset
             max: null
             min: null
             name: null
@@ -31,17 +31,17 @@ fieldLayouts:
             tip: null
             title: null
             type: craft\fieldlayoutelements\entries\EntryTitleField
-            uid: 383f6918-20fe-426b-9f50-faa0c9b66f87
+            uid: eb83d1d7-fade-4c3b-8e65-e0764646dae7
             userCondition: null
             warning: null
             width: 100
         name: Content
-        uid: 99e7b8c8-4f29-4262-8f46-3b423be9cf8a
+        uid: f6d36c18-e137-46c7-9222-61136c529a2a
         userCondition: null
-handle: ent_jobCategories
+handle: ent_assets
 hasTitleField: true
-icon: layer-group
-name: 'Job Categories'
+icon: bed
+name: Assets
 showSlugField: true
 showStatusField: true
 slugTranslationKeyFormat: null

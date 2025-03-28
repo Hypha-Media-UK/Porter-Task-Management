@@ -1,6 +1,6 @@
 color: null
 fieldLayouts:
-  f5c01a58-5cb2-422e-a942-f742027e0153:
+  f6e62a36-2f6a-4417-a633-f77a00f00cb0:
     tabs:
       -
         elementCondition: null
@@ -10,14 +10,14 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
-            dateAdded: '2025-03-27T13:21:15+00:00'
+            dateAdded: '2025-03-28T07:46:50+00:00'
             disabled: false
             elementCondition: null
             id: null
             includeInCards: false
             inputType: null
             instructions: null
-            label: 'Job Category'
+            label: Type
             max: null
             min: null
             name: null
@@ -31,17 +31,17 @@ fieldLayouts:
             tip: null
             title: null
             type: craft\fieldlayoutelements\entries\EntryTitleField
-            uid: 383f6918-20fe-426b-9f50-faa0c9b66f87
+            uid: 7cb92348-5720-4dd4-87ac-08b2bca15039
             userCondition: null
             warning: null
             width: 100
         name: Content
-        uid: 99e7b8c8-4f29-4262-8f46-3b423be9cf8a
+        uid: bc01e47b-9094-45db-bb2a-4c402327c126
         userCondition: null
-handle: ent_jobCategories
+handle: gases
 hasTitleField: true
-icon: layer-group
-name: 'Job Categories'
+icon: prescription-bottle
+name: Gases
 showSlugField: true
 showStatusField: true
 slugTranslationKeyFormat: null

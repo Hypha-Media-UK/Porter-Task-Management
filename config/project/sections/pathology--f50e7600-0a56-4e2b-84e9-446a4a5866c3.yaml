@@ -2,10 +2,10 @@ defaultPlacement: end
 enableVersioning: true
 entryTypes:
   -
-    uid: 234179bc-9833-430f-b5d1-5328981b44b1 # Job Categories
-handle: jobCategories
+    uid: d9f5253d-630f-41f4-9552-78b4c22c4a48 # Pathology
+handle: pathology
 maxAuthors: 1
-name: 'Job Categories'
+name: Pathology
 previewTargets:
   -
     __assoc__:
@@ -23,9 +23,9 @@ siteSettings:
   a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
     enabledByDefault: true
     hasUrls: true
-    template: job-categories/_entry.twig
-    uriFormat: 'job-categories/{slug}'
+    template: pathology/_entry.twig
+    uriFormat: 'pathology/{slug}'
 structure:
-  maxLevels: 2
-  uid: 244cd928-08c3-4d2b-97bb-b61ee2dab757
+  maxLevels: 1
+  uid: 99a125b4-7064-4adb-bddb-6589e32b8a54
 type: structure
