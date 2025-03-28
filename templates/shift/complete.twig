@@ -1,0 +1,142 @@
+{% extends "_layout.twig" %}
+
+{% block title %}Complete Shift - Porter Task Management{% endblock %}
+
+{% block content %}
+<div class="task-screen">
+    <div class="screen-header">
+        <div class="header-info">
+            <h2>Complete Shift</h2>
+            <div class="shift-info">{{ now|date('l, F j, Y') }} | 
+              {% if craft.app.request.getParam('shift') == 'day' %}
+                08:00 - 20:00
+              {% else %}
+                20:00 - 08:00
+              {% endif %}
+            </div>
+        </div>
+        <a href="{{ url('shift/' ~ craft.app.request.getParam('shift', 'day')) }}" class="btn btn-secondary">Back</a>
+    </div>
+    
+    <div class="shift-summary">
+        <h3>Shift Summary</h3>
+        
+        {% set pendingTasks = craft.entries()
+            .section('tasks')
+            .fd_status('pending')
+            .all() %}
+            
+        {% set completedTasks = craft.entries()
+            .section('tasks')
+            .fd_status('completed')
+            .all() %}
+        
+        <div class="summary-stats">
+            <div class="stat-item">
+                <span class="stat-label">Tasks Completed:</span>
+                <span class="stat-value">{{ completedTasks|length }}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Tasks Pending:</span>
+                <span class="stat-value">{{ pendingTasks|length }}</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Total Tasks:</span>
+                <span class="stat-value">{{ completedTasks|length + pendingTasks|length }}</span>
+            </div>
+        </div>
+        
+        {% if completedTasks|length > 0 or pendingTasks|length > 0 %}
+            <form id="complete-shift-form" method="post" class="complete-shift-form">
+                {{ csrfInput() }}
+                <input type="hidden" name="action" value="entries/save-entry">
+                <input type="hidden" name="sectionId" value="{{ craft.app.sections.getSectionByHandle('shifts').id ?? '' }}">
+                <input type="hidden" name="typeId" value="{{ craft.app.sections.getEntryTypesByHandle('shifts')[0].id ?? '' }}">
+                <input type="hidden" name="enabled" value="1">
+                <input type="hidden" name="title" value="{{ craft.app.request.getParam('shift')|capitalize }} Shift - {{ now|date('Y-m-d') }}">
+                <input type="hidden" name="fields[fd_shiftType]" value="{{ craft.app.request.getParam('shift') }}">
+                <input type="hidden" name="fields[fd_date]" value="{{ now|date('Y-m-d') }}">
+                
+                <div class="confirmation-message">
+                    <p>Are you sure you want to complete this shift?</p>
+                    <p>All pending and completed tasks will be associated with this shift in the archive.</p>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Complete Shift</button>
+                    <a href="{{ url('shift/' ~ craft.app.request.getParam('shift', 'day')) }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        {% else %}
+            <div class="empty-state">
+                <p>No tasks have been created for this shift.</p>
+                <p>Create at least one task before completing the shift.</p>
+                <a href="{{ url('tasks/new', {shift: craft.app.request.getParam('shift', 'day')}) }}" class="btn btn-primary">Create New Task</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block additionalStyles %}
+<style>
+    .shift-summary {
+        background-color: #f4f4f4;
+        border-radius: 6px;
+        padding: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .shift-summary h3 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+    }
+    
+    .summary-stats {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 2rem;
+    }
+    
+    .stat-item {
+        text-align: center;
+    }
+    
+    .stat-label {
+        display: block;
+        font-size: 0.9rem;
+        color: #666;
+    }
+    
+    .stat-value {
+        display: block;
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #0077cc;
+    }
+    
+    .confirmation-message {
+        text-align: center;
+        margin-bottom: 2rem;
+        padding: 1rem;
+        background-color: rgba(255, 193, 7, 0.1);
+        border: 1px solid rgba(255, 193, 7, 0.3);
+        border-radius: 4px;
+    }
+    
+    .complete-shift-form .form-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 2rem 0;
+    }
+    
+    .empty-state .btn {
+        margin-top: 1rem;
+    }
+</style>
+{% endblock %}

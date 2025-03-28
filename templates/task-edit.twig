@@ -1,0 +1,216 @@
+{% extends "_layout.twig" %}
+
+{% block title %}Edit Task - Porter Task Management{% endblock %}
+
+{% block content %}
+{% set task = craft.entries.section('tasks').id(craft.app.request.getParam('id')).one() %}
+
+{% if task %}
+<div class="task-screen">
+    <div class="screen-header">
+        <div class="header-info">
+            <h2>Edit Task</h2>
+            <div class="shift-info">{{ now|date('l, F j, Y') }}</div>
+        </div>
+        <a href="{{ url(task.fd_status == 'pending' ? 'tasks/pending' : 'tasks/completed') }}" class="btn btn-secondary">Back</a>
+    </div>
+    
+    <form id="task-form" class="task-form" method="post">
+        {{ csrfInput() }}
+        <input type="hidden" name="action" value="entries/save-entry">
+        <input type="hidden" name="sectionId" value="{{ craft.app.sections.getSectionByHandle('tasks').id }}">
+        <input type="hidden" name="typeId" value="{{ craft.app.sections.getSectionByHandle('tasks').entryTypes[0].id }}">
+        <input type="hidden" name="entryId" value="{{ task.id }}">
+        <input type="hidden" name="enabled" value="1">
+        <input type="hidden" name="title" value="{{ task.title }}">
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="time-received">Time Received</label>
+                <input type="time" id="time-received" name="fields[fd_time_received]" value="{{ task.fd_time_received|date('H:i') }}" required>
+            </div>
+            <div class="form-group">
+                <label for="job-category">Job Category</label>
+                <select id="job-category" name="fields[fd_job_category][]" required>
+                    <option value="">Select Job Category</option>
+                    {% for category in craft.entries.section('jobCategories').all() %}
+                        <option value="{{ category.id }}" {{ task.fd_job_category.ids()|first == category.id ? 'selected' : '' }}>
+                            {{ category.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="from-department">From Department</label>
+                <select id="from-department" name="fields[fd_fromDepartment][]" required>
+                    <option value="">Select From Department</option>
+                    {% for department in craft.entries.section('departments').all() %}
+                        <option value="{{ department.id }}" {{ task.fd_fromDepartment.ids()|first == department.id ? 'selected' : '' }}>
+                            {{ department.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="to-department">To Department</label>
+                <select id="to-department" name="fields[fd_toDepartment][]" required>
+                    <option value="">Select To Department</option>
+                    {% for department in craft.entries.section('departments').all() %}
+                        <option value="{{ department.id }}" {{ task.fd_toDepartment.ids()|first == department.id ? 'selected' : '' }}>
+                            {{ department.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="item-type">Item Type</label>
+                <select id="item-type" name="fields[fd_itemType]" required>
+                    <option value="">Select Item Type</option>
+                    
+                    <optgroup label="Patient Transfer">
+                    {% for item in craft.entries.section('transportOptions').all() %}
+                        <option value="{{ item.id }}" data-category="patient-transfer" {{ task.fd_itemType == item.id ? 'selected' : '' }}>
+                            {{ item.title }}
+                        </option>
+                    {% endfor %}
+                    </optgroup>
+                    
+                    <optgroup label="General Items">
+                    {% for item in craft.entries.section('generalItems').all() %}
+                        <option value="{{ item.id }}" data-category="ad-hoc" {{ task.fd_itemType == item.id ? 'selected' : '' }}>
+                            {{ item.title }}
+                        </option>
+                    {% endfor %}
+                    </optgroup>
+                    
+                    <optgroup label="Samples">
+                    {% for item in craft.entries.section('samples').all() %}
+                        <option value="{{ item.id }}" data-category="sample-transfer" {{ task.fd_itemType == item.id ? 'selected' : '' }}>
+                            {{ item.title }}
+                        </option>
+                    {% endfor %}
+                    </optgroup>
+                    
+                    <optgroup label="Gases">
+                    {% for item in craft.entries.section('gases').all() %}
+                        <option value="{{ item.id }}" data-category="ad-hoc" {{ task.fd_itemType == item.id ? 'selected' : '' }}>
+                            {{ item.title }}
+                        </option>
+                    {% endfor %}
+                    </optgroup>
+                    
+                    <optgroup label="Assets">
+                    {% for item in craft.entries.section('assets').all() %}
+                        <option value="{{ item.id }}" data-category="asset-movement" {{ task.fd_itemType == item.id ? 'selected' : '' }}>
+                            {{ item.title }}
+                        </option>
+                    {% endfor %}
+                    </optgroup>
+                    
+                    <optgroup label="Pathology">
+                    {% for item in craft.entries.section('pathology').all() %}
+                        <option value="{{ item.id }}" data-category="pathology" {{ task.fd_itemType == item.id ? 'selected' : '' }}>
+                            {{ item.title }}
+                        </option>
+                    {% endfor %}
+                    </optgroup>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="staff-member">Staff Member (Optional)</label>
+                <select id="staff-member" name="fields[fd_staffMember][]">
+                    <option value="">Assign to Staff Member</option>
+                    {% for staff in craft.entries.section('staff').all() %}
+                        <option value="{{ staff.id }}" {{ task.fd_staffMember.ids()|first == staff.id ? 'selected' : '' }}>
+                            {{ staff.title }} {{ staff.fd_surname }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="transport-type">Transport Type</label>
+                <select id="transport-type" name="fields[fd_transportType]" required>
+                    <option value="walk" {{ task.fd_transportType == 'walk' ? 'selected' : '' }}>Walk</option>
+                    <option value="trolley" {{ task.fd_transportType == 'trolley' ? 'selected' : '' }}>Trolley</option>
+                    <option value="wheelchair" {{ task.fd_transportType == 'wheelchair' ? 'selected' : '' }}>Wheelchair</option>
+                    <option value="vehicle" {{ task.fd_transportType == 'vehicle' ? 'selected' : '' }}>Vehicle</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="time-completed">Time Completed {{ task.fd_status == 'completed' ? '' : '(Optional)' }}</label>
+                <input type="time" id="time-completed" name="fields[fd_time_completed]" value="{{ task.fd_time_completed ? task.fd_time_completed|date('H:i') : '' }}" {{ task.fd_status == 'completed' ? 'required' : '' }}>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="notes">Notes (Optional)</label>
+            <textarea id="notes" name="fields[fd_notes]" rows="3">{{ task.fd_notes }}</textarea>
+        </div>
+        
+        <input type="hidden" name="fields[fd_status]" value="{{ task.fd_status }}" id="status-field">
+        
+        <div class="form-buttons">
+            {% if task.fd_status == 'pending' %}
+                <button type="button" id="pending-button" class="btn btn-warning">Update as Pending</button>
+                <button type="button" id="completed-button" class="btn btn-success">Mark as Completed</button>
+            {% else %}
+                <button type="button" id="pending-button" class="btn btn-warning">Move to Pending</button>
+                <button type="button" id="completed-button" class="btn btn-success">Update Completed Task</button>
+            {% endif %}
+        </div>
+    </form>
+</div>
+{% else %}
+<div class="task-screen">
+    <div class="error-message">
+        <h2>Task Not Found</h2>
+        <p>The task you're looking for doesn't exist or has been deleted.</p>
+        <a href="{{ url('') }}" class="btn btn-primary">Return to Home</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ alias('@web') }}/src/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const pendingButton = document.getElementById('pending-button');
+    const completedButton = document.getElementById('completed-button');
+    const statusField = document.getElementById('status-field');
+    
+    if (pendingButton) {
+        pendingButton.addEventListener('click', function() {
+            statusField.value = 'pending';
+            document.getElementById('task-form').submit();
+        });
+    }
+    
+    if (completedButton) {
+        completedButton.addEventListener('click', function() {
+            statusField.value = 'completed';
+            
+            // Make sure time completed is filled when marking as completed
+            const timeCompletedField = document.getElementById('time-completed');
+            if (timeCompletedField && !timeCompletedField.value) {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                timeCompletedField.value = `${hours}:${minutes}`;
+            }
+            
+            document.getElementById('task-form').submit();
+        });
+    }
+});
+</script>
+{% endblock %}

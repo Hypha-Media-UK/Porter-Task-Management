@@ -1,4 +1,4 @@
-dateModified: 1743152554
+dateModified: 1743155453
 elementSources:
   craft\elements\Entry:
     -
@@ -90,7 +90,7 @@ elementSources:
         - link
       type: native
     -
-      key: 'section:6986b576-80c3-4533-87d5-099d591c53cb' # Oxygen
+      key: 'section:6986b576-80c3-4533-87d5-099d591c53cb' # Gases
       type: native
     -
       defaultSort:
@@ -165,7 +165,7 @@ meta:
     552a4505-21bc-4931-8169-456df83a265b: Tasks # Tasks
     1433d618-7471-4baf-97ab-0f99412d4937: Time # Time
     6377b2a4-4b9a-4d81-a7d6-48c3c6d0c850: Shifts # Shifts
-    6986b576-80c3-4533-87d5-099d591c53cb: Oxygen # Oxygen
+    6986b576-80c3-4533-87d5-099d591c53cb: Gases # Gases
     9125c8fc-42f2-4111-80eb-7f45937c21ac: Assets # Assets
     30567af9-d3c8-4734-84f2-9cbece3ab7d2: Departments # Departments
     234179bc-9833-430f-b5d1-5328981b44b1: 'Job Categories' # Job Categories

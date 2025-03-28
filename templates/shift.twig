@@ -1,0 +1,35 @@
+{% extends "_layout.twig" %}
+
+{% block title %}{{ shiftType|capitalize }} Shift - Porter Task Management{% endblock %}
+
+{% block content %}
+<div class="task-screen">
+    <div class="screen-header">
+        <div class="header-info">
+            <h2>{{ shiftType|capitalize }} Shift</h2>
+            <div class="shift-info">{{ now|date('l, F j, Y') }} | 
+              {% if shiftType == 'day' %}
+                08:00 - 20:00
+              {% else %}
+                20:00 - 08:00
+              {% endif %}
+            </div>
+        </div>
+        <a href="{{ url('') }}" class="btn btn-secondary">Home</a>
+    </div>
+    
+    <div class="action-buttons">
+        <a href="{{ url('tasks/new') }}" class="btn btn-primary btn-lg">New Task</a>
+    </div>
+    
+    <div class="nav-buttons">
+        <a href="{{ url('tasks/pending') }}" class="btn btn-secondary">Pending Tasks</a>
+        <a href="{{ url('tasks/completed') }}" class="btn btn-secondary">Completed Tasks</a>
+        <a href="{{ url('shift/complete') }}" class="btn btn-warning">Shift Complete</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ alias('@web') }}/src/js/app.js"></script>
+{% endblock %}

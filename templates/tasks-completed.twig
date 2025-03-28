@@ -1,0 +1,70 @@
+{% extends "_layout.twig" %}
+
+{% block title %}Completed Tasks - Porter Task Management{% endblock %}
+
+{% block content %}
+<div class="task-screen">
+    <div class="screen-header">
+        <div class="header-info">
+            <h2>Completed Tasks</h2>
+            <div class="shift-info">{{ now|date('l, F j, Y') }} | 
+              {% if craft.app.request.getParam('shift') == 'day' %}
+                08:00 - 20:00
+              {% else %}
+                20:00 - 08:00
+              {% endif %}
+            </div>
+        </div>
+        <a href="{{ url('shift/' ~ craft.app.request.getParam('shift', 'day')) }}" class="btn btn-secondary">Back</a>
+    </div>
+    
+    <div class="task-list">
+        {% set completedTasks = craft.entries()
+            .section('tasks')
+            .fd_status('completed')
+            .orderBy('fd_time_completed DESC')
+            .all() %}
+            
+        {% if completedTasks|length %}
+            {% for task in completedTasks %}
+                <div class="task-item" data-task-id="{{ task.id }}">
+                    <div class="task-header">
+                        <div class="task-time">
+                            {% if task.fd_time_completed %}
+                                Completed: {{ task.fd_time_completed|date('H:i') }}
+                            {% endif %}
+                        </div>
+                        <div class="task-category">{{ task.fd_job_category.one().title ?? 'Uncategorized' }}</div>
+                    </div>
+                    <div class="task-details">
+                        <div class="departments">
+                            <span>From: {{ task.fd_fromDepartment.one().title ?? 'Unknown' }}</span>
+                            <span>To: {{ task.fd_toDepartment.one().title ?? 'Unknown' }}</span>
+                        </div>
+                        <div class="staff-member">
+                            {% if task.fd_staffMember.one() %}
+                                {{ task.fd_staffMember.one().title }} {{ task.fd_staffMember.one().fd_surname }}
+                            {% else %}
+                                Unassigned
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <p>No completed tasks for this shift yet.</p>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="nav-buttons">
+        <a href="{{ url('tasks/new') }}" class="btn btn-primary">New Task</a>
+        <a href="{{ url('tasks/pending') }}" class="btn btn-secondary">Pending Tasks</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ alias('@web') }}/src/js/app.js"></script>
+{% endblock %}

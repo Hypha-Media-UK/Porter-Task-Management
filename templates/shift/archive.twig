@@ -1,0 +1,143 @@
+{% extends "_layout.twig" %}
+
+{% block title %}Shift Archive - Porter Task Management{% endblock %}
+
+{% block content %}
+<div class="task-screen">
+    <div class="screen-header">
+        <div class="header-info">
+            <h2>Shift Archive</h2>
+            <div class="shift-info">{{ now|date('l, F j, Y') }}</div>
+        </div>
+        <a href="{{ url('') }}" class="btn btn-secondary">Home</a>
+    </div>
+    
+    <div class="archive-list">
+        {% set shifts = craft.entries()
+            .section('shifts')
+            .orderBy('postDate DESC')
+            .limit(20)
+            .all() %}
+            
+        {% if shifts|length %}
+            <div class="shift-list">
+                {% for shift in shifts %}
+                    <div class="shift-item">
+                        <div class="shift-header">
+                            <h3>{{ shift.fd_shiftType|capitalize }} Shift</h3>
+                            <div class="shift-date">{{ shift.postDate|date('l, F j, Y') }}</div>
+                        </div>
+                        <div class="shift-stats">
+                            {% set completedCount = craft.entries()
+                                .section('tasks')
+                                .relatedTo(shift)
+                                .fd_status('completed')
+                                .count() %}
+                                
+                            {% set pendingCount = craft.entries()
+                                .section('tasks')
+                                .relatedTo(shift)
+                                .fd_status('pending')
+                                .count() %}
+                                
+                            <div class="stat-item">
+                                <span class="stat-label">Tasks Completed:</span>
+                                <span class="stat-value">{{ completedCount }}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Tasks Pending:</span>
+                                <span class="stat-value">{{ pendingCount }}</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Total Tasks:</span>
+                                <span class="stat-value">{{ completedCount + pendingCount }}</span>
+                            </div>
+                        </div>
+                        <div class="shift-actions">
+                            <a href="{{ shift.url }}" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No shifts have been completed yet.</p>
+                <p>Complete a shift to see it in the archive.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block additionalStyles %}
+<style>
+    .shift-list {
+        margin-top: 2rem;
+    }
+    
+    .shift-item {
+        background-color: #f4f4f4;
+        border-radius: 6px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .shift-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+    
+    .shift-header h3 {
+        margin: 0;
+    }
+    
+    .shift-date {
+        color: #666;
+    }
+    
+    .shift-stats {
+        display: flex;
+        gap: 2rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .stat-item {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        color: #666;
+    }
+    
+    .stat-value {
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 3rem 0;
+        color: #666;
+    }
+    
+    @media (max-width: 576px) {
+        .shift-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .shift-date {
+            margin-top: 0.5rem;
+        }
+        
+        .shift-stats {
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+    }
+</style>
+{% endblock %}

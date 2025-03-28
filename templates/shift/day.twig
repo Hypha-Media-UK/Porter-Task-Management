@@ -1,0 +1,29 @@
+{% extends "_layout.twig" %}
+
+{% block title %}Day Shift - Porter Task Management{% endblock %}
+
+{% block content %}
+<div class="task-screen">
+    <div class="screen-header">
+        <div class="header-info">
+            <h2>Day Shift</h2>
+            <div class="shift-info">{{ now|date('l, F j, Y') }} | 08:00 - 20:00</div>
+        </div>
+        <a href="{{ url('') }}" class="btn btn-secondary">Home</a>
+    </div>
+    
+    <div class="action-buttons">
+        <a href="{{ url('tasks/new', {shift: 'day'}) }}" class="btn btn-primary btn-lg">New Task</a>
+    </div>
+    
+    <div class="nav-buttons">
+        <a href="{{ url('tasks/pending', {shift: 'day'}) }}" class="btn btn-secondary">Pending Tasks</a>
+        <a href="{{ url('tasks/completed', {shift: 'day'}) }}" class="btn btn-secondary">Completed Tasks</a>
+        <a href="{{ url('shift/complete', {shift: 'day'}) }}" class="btn btn-warning">Shift Complete</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ alias('@web') }}/src/js/app.js"></script>
+{% endblock %}

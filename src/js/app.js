@@ -1,471 +1,255 @@
+// Porter Task Management App
+
+document.addEventListener('DOMContentLoaded', function() {
+    initApp();
+});
+
+function initApp() {
+    // Initialize the current time for time fields
+    updateCurrentTime();
+    
+    // Set up event listeners
+    setupFormListeners();
+    setupTaskListeners();
+    
+    // Handle form filtering logic
+    setupFormFilterLogic();
+}
+
 /**
- * Core functionality for Porter Task Management System
+ * Updates the current time in the time-received field
  */
+function updateCurrentTime() {
+    const timeReceivedInput = document.getElementById('time-received');
+    
+    if (timeReceivedInput) {
+        const updateTime = () => {
+            const now = new Date();
+            let hours = now.getHours().toString().padStart(2, '0');
+            let minutes = now.getMinutes().toString().padStart(2, '0');
+            timeReceivedInput.value = `${hours}:${minutes}`;
+        };
+        
+        // Initial update
+        updateTime();
+        
+        // Update every minute
+        setInterval(updateTime, 60000);
+    }
+}
 
-// API Service - This will be replaced with actual API calls to Craft CMS
-const apiService = {
-  // Fetch data methods - these will be replaced with API calls in Craft implementation
-  async fetchStaff() {
-    try {
-      // In CraftCMS, this would be a fetch to an API endpoint
-      const response = await fetch('/src/data/staff.json');
-      if (!response.ok) throw new Error('Failed to fetch staff');
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching staff:', error);
-      return [];
-    }
-  },
-  
-  async fetchBuildings() {
-    try {
-      const response = await fetch('/src/data/buildings.json');
-      if (!response.ok) throw new Error('Failed to fetch buildings');
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching buildings:', error);
-      return [];
-    }
-  },
-  
-  async fetchDepartments() {
-    try {
-      const response = await fetch('/src/data/departments.json');
-      if (!response.ok) throw new Error('Failed to fetch departments');
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching departments:', error);
-      return [];
-    }
-  },
-  
-  async fetchJobTypes() {
-    try {
-      const response = await fetch('/src/data/jobTypes.json');
-      if (!response.ok) throw new Error('Failed to fetch job types');
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching job types:', error);
-      return [];
-    }
-  },
-  
-  async fetchJobCategories() {
-    try {
-      const response = await fetch('/src/data/jobCategories.json');
-      if (!response.ok) throw new Error('Failed to fetch job categories');
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching job categories:', error);
-      return [];
-    }
-  },
-  
-  // Task operations
-  getTasks() {
-    return JSON.parse(localStorage.getItem('porter_tasks') || '[]');
-  },
-  
-  saveTask(task) {
-    const tasks = this.getTasks();
-    task.id = Date.now(); // Generate a unique ID
-    tasks.push(task);
-    localStorage.setItem('porter_tasks', JSON.stringify(tasks));
-    return task;
-  },
-  
-  updateTask(taskId, updates) {
-    const tasks = this.getTasks();
-    const taskIndex = tasks.findIndex(t => t.id === taskId);
-    if (taskIndex !== -1) {
-      tasks[taskIndex] = {...tasks[taskIndex], ...updates};
-      localStorage.setItem('porter_tasks', JSON.stringify(tasks));
-      return tasks[taskIndex];
-    }
-    return null;
-  },
-  
-  deleteTask(taskId) {
-    const tasks = this.getTasks();
-    const updatedTasks = tasks.filter(t => t.id !== taskId);
-    localStorage.setItem('porter_tasks', JSON.stringify(updatedTasks));
-    return taskId;
-  },
-  
-  // Archives
-  getArchivedShifts() {
-    return JSON.parse(localStorage.getItem('porter_archived_shifts') || '[]');
-  },
-  
-  saveArchivedShift(shift) {
-    const archivedShifts = this.getArchivedShifts();
-    archivedShifts.push(shift);
-    localStorage.setItem('porter_archived_shifts', JSON.stringify(archivedShifts));
-    return shift;
-  }
-};
-
-// Main app global state
-const app = {
-  data: {
-    staff: [],
-    buildings: [],
-    departments: [],
-    jobTypes: [],
-    jobCategories: [],
-    tasks: []
-  },
-  settings: {
-    dayShiftStart: '08:00',
-    dayShiftEnd: '20:00',
-    nightShiftStart: '20:00',
-    nightShiftEnd: '08:00'
-  },
-  currentDate: new Date(),
-  currentShift: 'day', // 'day' or 'night'
-  
-  // Initialize the application
-  async init() {
-    try {
-      // Load all data
-      await this.loadAllData();
-      
-      // Set current date to today's date
-      const today = new Date();
-      this.currentDate = today;
-      
-      // Determine current shift based on time
-      const currentHour = today.getHours();
-      const currentMinutes = today.getMinutes();
-      const currentTimeString = `${currentHour.toString().padStart(2, '0')}:${currentMinutes.toString().padStart(2, '0')}`;
-      
-      if (this.isTimeBetween(currentTimeString, this.settings.dayShiftStart, this.settings.dayShiftEnd)) {
-        this.currentShift = 'day';
-      } else {
-        this.currentShift = 'night';
-      }
-      
-      // Load tasks from storage
-      this.data.tasks = apiService.getTasks();
-      
-      // Initialize common elements on the page
-      this.initCommonElements();
-      
-      return true;
-    } catch (error) {
-      console.error('Error initializing app:', error);
-      return false;
-    }
-  },
-  
-  // Load all required data
-  async loadAllData() {
-    try {
-      // Using our API service to fetch data
-      const [staff, buildings, departments, jobTypes, jobCategories] = await Promise.all([
-        apiService.fetchStaff(),
-        apiService.fetchBuildings(),
-        apiService.fetchDepartments(),
-        apiService.fetchJobTypes(),
-        apiService.fetchJobCategories()
-      ]);
-      
-      this.data.staff = staff;
-      this.data.buildings = buildings;
-      this.data.departments = departments;
-      this.data.jobTypes = jobTypes;
-      this.data.jobCategories = jobCategories;
-      
-      return true;
-    } catch (error) {
-      console.error('Error loading data:', error);
-      return false;
-    }
-  },
-  
-  // Initialize common page elements
-  initCommonElements() {
-    // Set up date inputs with current date if they exist
-    const dateInputs = document.querySelectorAll('#current-date');
-    if (dateInputs.length) {
-      const formattedDate = this.formatDateForInput(this.currentDate);
-      dateInputs.forEach(input => {
-        input.value = formattedDate;
-        input.addEventListener('change', (e) => {
-          this.currentDate = new Date(e.target.value);
-          this.saveState();
-        });
-      });
+/**
+ * Sets up all form event listeners
+ */
+function setupFormListeners() {
+    const taskForm = document.getElementById('task-form');
+    const jobCategorySelect = document.getElementById('job-category');
+    const pendingButton = document.getElementById('pending-button');
+    const completedButton = document.getElementById('completed-button');
+    
+    if (taskForm) {
+        // We won't prevent default form submission since we want Craft to handle it
+        // But we can still add custom validation if needed
     }
     
-    // Set up shift buttons if they exist
-    const shiftButtons = document.querySelectorAll('.shift-btn');
-    if (shiftButtons.length) {
-      shiftButtons.forEach(btn => {
-        if (btn.dataset.shift === this.currentShift) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
+    if (pendingButton) {
+        pendingButton.addEventListener('click', function(e) {
+            // We're using direct form submission with the status-field now
+            // The button behavior is handled in each template
+        });
+    }
+    
+    if (completedButton) {
+        completedButton.addEventListener('click', function(e) {
+            // We're using direct form submission with the status-field now
+            // The button behavior is handled in each template
+        });
+    }
+    
+    // Handle showing/hiding transport type vs item type based on job category
+    if (jobCategorySelect) {
+        jobCategorySelect.addEventListener('change', function() {
+            toggleTransportItemFields(this);
+        });
+        
+        // Call once on page load if a value is already selected
+        if (jobCategorySelect.value) {
+            toggleTransportItemFields(jobCategorySelect);
+        }
+    }
+}
+
+/**
+ * Toggles between Transport Type and Item Type fields based on Job Category
+ * Also handles default department selection based on category
+ */
+function toggleTransportItemFields(jobCategorySelect) {
+    const selectedCategoryText = jobCategorySelect.options[jobCategorySelect.selectedIndex]?.text?.toLowerCase() || '';
+    const itemTypeRow = document.getElementById('item-type-row');
+    const transportTypeRow = document.getElementById('transport-type-row');
+    const itemTypeSelect = document.getElementById('item-type');
+    const transportTypeSelect = document.getElementById('transport-type');
+    const toDepartmentSelect = document.getElementById('to-department');
+    const fromDepartmentSelect = document.getElementById('from-department');
+    
+    // Set department defaults based on category
+    if (selectedCategoryText === 'samples' && toDepartmentSelect) {
+        // For Samples, set "To Department" to Pathology
+        Array.from(toDepartmentSelect.options).forEach(option => {
+            if (option.text.toLowerCase() === 'pathology') {
+                toDepartmentSelect.value = option.value;
+            }
+        });
+    } else if (selectedCategoryText === 'pathology' && fromDepartmentSelect) {
+        // For Pathology, set "From Department" to Pathology
+        Array.from(fromDepartmentSelect.options).forEach(option => {
+            if (option.text.toLowerCase() === 'pathology') {
+                fromDepartmentSelect.value = option.value;
+            }
+        });
+    }
+    
+    if (selectedCategoryText.includes('patient')) {
+        // For Patient Transfer, show Transport Type and hide Item Type
+        if (itemTypeRow) itemTypeRow.style.display = 'none';
+        if (transportTypeRow) transportTypeRow.style.display = '';
+        
+        // Make transport type required and item type not required
+        if (itemTypeSelect) itemTypeSelect.required = false;
+        if (transportTypeSelect) transportTypeSelect.required = true;
+    } else {
+        // For other categories, show Item Type and hide Transport Type
+        if (itemTypeRow) itemTypeRow.style.display = '';
+        if (transportTypeRow) transportTypeRow.style.display = 'none';
+        
+        // Make item type required and transport type not required
+        if (itemTypeSelect) itemTypeSelect.required = true;
+        if (transportTypeSelect) transportTypeSelect.required = false;
+    }
+}
+
+/**
+ * Sets up task list item event listeners
+ */
+function setupTaskListeners() {
+    const taskItems = document.querySelectorAll('.task-item');
+    
+    taskItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const taskId = this.getAttribute('data-task-id');
+            if (taskId) {
+                // The URL format is now handled in the template
+            }
+        });
+    });
+}
+
+/**
+ * Sets up the filtering logic for the form fields
+ * - Job category filters the available item types
+ */
+function setupFormFilterLogic() {
+    const jobCategorySelect = document.getElementById('job-category');
+    const itemTypeSelect = document.getElementById('item-type');
+    
+    if (jobCategorySelect && itemTypeSelect) {
+        // Clear default option selections and make them based on category
+        const optgroups = itemTypeSelect.querySelectorAll('optgroup');
+        
+        // Define category mappings
+        const categoryMapping = {
+            'patient transfer': 'transport-options',
+            'samples': 'pathology',
+            'sample transfer': 'pathology',
+            'asset movement': 'assets',
+            'pathology': 'pathology',
+            'gases': 'gases',
+            'general items': 'general-items',
+            'ad-hoc': 'general-items'
+        };
+        
+        // Initial filtering based on default selection
+        if (jobCategorySelect.value) {
+            filterItemTypesByCategory(jobCategorySelect, itemTypeSelect, optgroups, categoryMapping);
         }
         
-        btn.addEventListener('click', (e) => {
-          shiftButtons.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          this.currentShift = btn.dataset.shift;
-          this.saveState();
+        // Set up change handler
+        jobCategorySelect.addEventListener('change', function() {
+            // First toggle transport vs item fields
+            toggleTransportItemFields(this);
+            
+            // Then filter the item types if showing
+            if (document.getElementById('item-type-row').style.display !== 'none') {
+                filterItemTypesByCategory(this, itemTypeSelect, optgroups, categoryMapping);
+            }
         });
-      });
-    }
-    
-    // Set up date and shift displays if they exist
-    this.updateShiftDisplays();
-    
-    // Set up navigation buttons if they exist
-    this.setupNavigationButtons();
-  },
-  
-  // Update date and shift display elements
-  updateShiftDisplays() {
-    const dateDisplays = document.querySelectorAll('#current-date-display');
-    if (dateDisplays.length) {
-      const formattedDate = this.formatDate(this.currentDate);
-      dateDisplays.forEach(el => {
-        el.textContent = `Date: ${formattedDate}`;
-      });
-    }
-    
-    const shiftDisplays = document.querySelectorAll('#current-shift-display');
-    if (shiftDisplays.length) {
-      const shiftText = this.currentShift === 'day' 
-        ? `Day Shift (${this.settings.dayShiftStart} - ${this.settings.dayShiftEnd})` 
-        : `Night Shift (${this.settings.nightShiftStart} - ${this.settings.nightShiftEnd})`;
-      
-      shiftDisplays.forEach(el => {
-        el.textContent = `Shift: ${shiftText}`;
-      });
-    }
-  },
-  
-  // Set up navigation buttons
-  setupNavigationButtons() {
-    // New task button
-    const newTaskBtn = document.getElementById('new-task-btn');
-    if (newTaskBtn) {
-      newTaskBtn.addEventListener('click', () => {
-        window.location.href = '/new-task';
-      });
-    }
-    
-    // Pending tasks button
-    const pendingTasksBtn = document.getElementById('pending-tasks-btn');
-    if (pendingTasksBtn) {
-      pendingTasksBtn.addEventListener('click', () => {
-        window.location.href = '/pending-tasks';
-      });
-    }
-    
-    // Completed tasks button
-    const completedTasksBtn = document.getElementById('completed-tasks-btn');
-    if (completedTasksBtn) {
-      completedTasksBtn.addEventListener('click', () => {
-        window.location.href = '/completed-tasks';
-      });
-    }
-    
-    // Shift complete button
-    const shiftCompleteBtn = document.getElementById('shift-complete-btn');
-    if (shiftCompleteBtn) {
-      shiftCompleteBtn.addEventListener('click', () => {
-        if (confirm('Are you sure you want to complete this shift? This will archive all current tasks.')) {
-          this.completeShift();
-          window.location.href = '/shift-report';
+        
+        // Trigger the change handler if there's a default value
+        if (jobCategorySelect.value) {
+            jobCategorySelect.dispatchEvent(new Event('change'));
         }
-      });
     }
-  },
-  
-  // Format date for display (e.g., "March 26, 2025")
-  formatDate(date) {
-    return date.toLocaleDateString('en-GB', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  },
-  
-  // Format date for input fields (YYYY-MM-DD)
-  formatDateForInput(date) {
-    return date.toISOString().split('T')[0];
-  },
-  
-  // Format time for display (e.g., "14:30")
-  formatTime(timeString) {
-    return timeString;
-  },
-  
-  // Check if a time is between two times
-  isTimeBetween(time, startTime, endTime) {
-    // For day shift, simple comparison works
-    if (startTime < endTime) {
-      return time >= startTime && time < endTime;
-    } 
-    // For night shift that crosses midnight
-    else {
-      return time >= startTime || time < endTime;
-    }
-  },
-  
-  // Save app state to localStorage
-  saveState() {
-    localStorage.setItem('porter_current_date', this.formatDateForInput(this.currentDate));
-    localStorage.setItem('porter_current_shift', this.currentShift);
-    localStorage.setItem('porter_tasks', JSON.stringify(this.data.tasks));
-    
-    // Update any displayed information
-    this.updateShiftDisplays();
-  },
-  
-  // Load app state from localStorage
-  loadState() {
-    const savedDate = localStorage.getItem('porter_current_date');
-    if (savedDate) {
-      this.currentDate = new Date(savedDate);
-    }
-    
-    const savedShift = localStorage.getItem('porter_current_shift');
-    if (savedShift) {
-      this.currentShift = savedShift;
-    }
-    
-    // Update UI based on loaded state
-    this.updateShiftDisplays();
-  },
-  
-  // Add a new task
-  addTask(task) {
-    // Add the date and shift information
-    task.date = this.formatDateForInput(this.currentDate);
-    task.shift = this.currentShift;
-    
-    // Use the API service to save
-    const savedTask = apiService.saveTask(task);
-    
-    // Update our local cache
-    this.data.tasks = apiService.getTasks();
-    
-    return savedTask;
-  },
-  
-  // Update an existing task
-  updateTask(taskId, updates) {
-    // Use the API service to update
-    const updatedTask = apiService.updateTask(taskId, updates);
-    
-    // Refresh our local cache
-    this.data.tasks = apiService.getTasks();
-    
-    return updatedTask;
-  },
-  
-  // Delete a task
-  deleteTask(taskId) {
-    // Use the API service to delete
-    apiService.deleteTask(taskId);
-    
-    // Refresh our local cache
-    this.data.tasks = apiService.getTasks();
-    
-    return true;
-  },
-  
-  // Complete a shift and archive tasks
-  completeShift() {
-    // Create a new archived shift
-    const newArchive = {
-      date: this.formatDateForInput(this.currentDate),
-      shift: this.currentShift,
-      shiftStart: this.currentShift === 'day' ? this.settings.dayShiftStart : this.settings.nightShiftStart,
-      shiftEnd: this.currentShift === 'day' ? this.settings.dayShiftEnd : this.settings.nightShiftEnd,
-      tasks: [...this.data.tasks],
-      archivedAt: new Date().toISOString()
-    };
-    
-    // Use the API service to save the archive
-    apiService.saveArchivedShift(newArchive);
-    
-    // Clear current tasks
-    this.data.tasks.forEach(task => {
-      apiService.deleteTask(task.id);
-    });
-    
-    // Refresh our local cache
-    this.data.tasks = [];
-    
-    return newArchive;
-  },
-  
-  // Get tasks for the current shift and date
-  getCurrentShiftTasks() {
-    const currentDateStr = this.formatDateForInput(this.currentDate);
-    return this.data.tasks.filter(task => 
-      task.date === currentDateStr && task.shift === this.currentShift
-    );
-  },
-  
-  // Get pending tasks
-  getPendingTasks() {
-    return this.getCurrentShiftTasks().filter(task => 
-      task.status === 'pending'
-    );
-  },
-  
-  // Get completed tasks
-  getCompletedTasks() {
-    return this.getCurrentShiftTasks().filter(task => 
-      task.status === 'completed'
-    );
-  },
-  
-  // Utility functions to get data by ID
-  getDepartmentName(id) {
-    const department = this.data.departments.find(d => d.id === id);
-    return department ? department.name : 'Unknown Department';
-  },
-  
-  getJobTypeName(id) {
-    const jobType = this.data.jobTypes.find(j => j.id === id);
-    return jobType ? jobType.name : 'Unknown Type';
-  },
-  
-  getJobCategoryName(id) {
-    const category = this.data.jobCategories.find(c => c.id === id);
-    return category ? category.name : 'Unknown Category';
-  },
-  
-  getStaffName(id) {
-    const staff = this.data.staff.find(s => s.id === id);
-    return staff ? staff.name : 'Unassigned';
-  },
-  
-  // Search staff by name (for predictive search)
-  searchStaffByName(query) {
-    if (!query || query.length < 2) return [];
-    
-    const lowerQuery = query.toLowerCase();
-    return this.data.staff.filter(staff => 
-      staff.name.toLowerCase().includes(lowerQuery)
-    );
-  }
-};
+}
 
-// Initialize app when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  app.init().then(() => {
-    app.loadState();
-    
-    // Check if there's a page-specific initialization function
-    if (typeof initPage === 'function') {
-      initPage();
+/**
+ * Filters the item types dropdown based on the selected job category
+ */
+function filterItemTypesByCategory(jobCategorySelect, itemTypeSelect, optgroups, categoryMapping) {
+    const selectedCategoryId = jobCategorySelect.value;
+    if (!selectedCategoryId) {
+        // If nothing selected, no filtering
+        return;
     }
-  });
-});
+    
+    // Get the selected category text
+    const selectedCategoryText = jobCategorySelect.options[jobCategorySelect.selectedIndex].text.toLowerCase();
+    
+    // Set default values
+    let targetGroupName = null;
+    
+    // Find the matching category map
+    for (const categoryKey in categoryMapping) {
+        if (selectedCategoryText === categoryKey || selectedCategoryText.includes(categoryKey)) {
+            targetGroupName = categoryMapping[categoryKey];
+            break;
+        }
+    }
+    
+    console.log(`Selected category: "${selectedCategoryText}", target group: "${targetGroupName}"`);
+    
+    // Hide all optgroups and options first
+    optgroups.forEach(group => {
+        group.style.display = 'none';
+        Array.from(group.querySelectorAll('option')).forEach(option => {
+            option.style.display = 'none';
+        });
+    });
+    
+    // Handle specific case for showing the correct optgroup
+    if (targetGroupName) {
+        // Find the matching optgroup
+        optgroups.forEach(group => {
+            const groupName = group.label.toLowerCase().replace(/\s+/g, '-');
+            if (groupName === targetGroupName || 
+                (targetGroupName === 'transport-options' && groupName === 'patient-transfer')) {
+                group.style.display = '';
+                Array.from(group.querySelectorAll('option')).forEach(option => {
+                    option.style.display = '';
+                });
+                console.log(`Showing optgroup: ${group.label}`);
+            }
+        });
+    } else {
+        // If no specific match, show all options for flexibility
+        console.log("No specific match found, showing all optgroups");
+        optgroups.forEach(group => {
+            group.style.display = '';
+            Array.from(group.querySelectorAll('option')).forEach(option => {
+                option.style.display = '';
+            });
+        });
+    }
+    
+    // Reset selection
+    itemTypeSelect.value = '';
+}
