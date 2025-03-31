@@ -103,9 +103,9 @@ function toggleTransportItemFields(jobCategorySelect) {
         });
     }
     
-    // Only set defaults for Pathology category for From Department
-    if (selectedCategoryText === 'pathology' && fromDepartmentSelect) {
-        // For Pathology category, set "From Department" to Pathology
+    // Only set defaults for Transfusion category for From Department
+    if (selectedCategoryText === 'transfusion' && fromDepartmentSelect) {
+        // For Transfusion category, set "From Department" to Pathology
         Array.from(fromDepartmentSelect.options).forEach(option => {
             if (option.text.toLowerCase() === 'pathology') {
                 fromDepartmentSelect.value = option.value;
@@ -163,14 +163,14 @@ function setupFormFilterLogic() {
         
         // Define category mappings
         const categoryMapping = {
-            'patient transfer': 'transport-options',
-            'samples': 'samples', // Corrected to show Samples entries, not Pathology
+            'patient transfer': 'transfer-type',
+            'samples': 'samples',
             'sample transfer': 'samples',
             'asset movement': 'assets',
-            'pathology': 'pathology',
+            'transfusion': 'transfusion',
             'gases': 'gases',
-            'general items': 'general-items',
-            'ad-hoc': 'general-items'
+            'general items': 'ad-hoc',
+            'ad-hoc': 'ad-hoc'
         };
         
         // Initial filtering based on default selection
@@ -198,7 +198,7 @@ function setupFormFilterLogic() {
 
 /**
  * Filters the item types dropdown based on the selected job category
- * Works with flat options structure using data attributes
+ * Uses the fd_jobCategory relationship field data from CMS
  */
 function filterItemTypesByCategory(jobCategorySelect, itemTypeSelect) {
     const selectedCategoryId = jobCategorySelect.value;
@@ -207,10 +207,10 @@ function filterItemTypesByCategory(jobCategorySelect, itemTypeSelect) {
         return;
     }
     
-    // Get the selected category text
-    const selectedCategoryText = jobCategorySelect.options[jobCategorySelect.selectedIndex].text.toLowerCase();
+    // Get the selected category text for logging
+    const selectedCategoryText = jobCategorySelect.options[jobCategorySelect.selectedIndex].text;
     
-    console.log(`Selected category: "${selectedCategoryText}"`);
+    console.log(`Selected category: "${selectedCategoryText}" (ID: ${selectedCategoryId})`);
     
     // Get all options (except the first placeholder)
     const options = Array.from(itemTypeSelect.querySelectorAll('option:not(:first-child)'));
@@ -220,13 +220,12 @@ function filterItemTypesByCategory(jobCategorySelect, itemTypeSelect) {
         option.style.display = 'none';
     });
     
-    // Then show only the relevant ones based on category
+    // Then show only the relevant ones based on category ID
     options.forEach(option => {
-        const categories = option.getAttribute('data-categories');
-        if (categories && (
-            categories.includes(selectedCategoryText) || 
-            (selectedCategoryText.includes('patient') && categories.includes('transport'))
-        )) {
+        // Use data-category-ids for direct job category relationship
+        const categoryIds = option.getAttribute('data-category-ids');
+        
+        if (categoryIds && categoryIds.split(',').includes(selectedCategoryId)) {
             option.style.display = '';
             console.log(`Showing item: ${option.textContent.trim()}`);
         }

@@ -2,10 +2,10 @@ defaultPlacement: end
 enableVersioning: true
 entryTypes:
   -
-    uid: 552a4505-21bc-4931-8169-456df83a265b # Tasks
-handle: tasks
+    uid: 39e1a7a3-c7f1-49b6-b4a7-a5f8b7e36e46 # Ad-Hoc
+handle: adHoc
 maxAuthors: 1
-name: Tasks
+name: Ad-Hoc
 previewTargets:
   -
     __assoc__:
@@ -23,9 +23,9 @@ siteSettings:
   a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
     enabledByDefault: true
     hasUrls: true
-    template: tasks/_entry.twig
-    uriFormat: 'tasks/{slug}'
+    template: general-items/_entry.twig
+    uriFormat: 'ad-hoc/{slug}'
 structure:
   maxLevels: 1
-  uid: 7e1040d2-b4a3-4a64-92ce-074ef0179f90
+  uid: ec3e39b8-68ae-452e-9107-59227a19fd73
 type: structure

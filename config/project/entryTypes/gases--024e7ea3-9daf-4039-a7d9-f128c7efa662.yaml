@@ -35,6 +35,22 @@ fieldLayouts:
             userCondition: null
             warning: null
             width: 100
+          -
+            dateAdded: '2025-03-31T13:31:12+00:00'
+            elementCondition: null
+            fieldUid: 8a0991bc-a55b-423f-be98-b0b07f622009 # Job Category
+            handle: null
+            includeInCards: false
+            instructions: null
+            label: null
+            providesThumbs: false
+            required: false
+            tip: null
+            type: craft\fieldlayoutelements\CustomField
+            uid: fe23405a-fad7-4c6f-91a2-2e4df18059e0
+            userCondition: null
+            warning: null
+            width: 100
         name: Content
         uid: bc01e47b-9094-45db-bb2a-4c402327c126
         userCondition: null

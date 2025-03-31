@@ -2,10 +2,10 @@ defaultPlacement: end
 enableVersioning: true
 entryTypes:
   -
-    uid: 066b15d3-420c-47dc-8971-7f87fbfafde1 # Transport Options
-handle: transportOptions
+    uid: 898bdf25-045f-4472-809a-93b4b6f25470 # Transfusion
+handle: transfusion
 maxAuthors: 1
-name: 'Transport Options'
+name: Transfusion
 previewTargets:
   -
     __assoc__:
@@ -23,9 +23,9 @@ siteSettings:
   a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
     enabledByDefault: true
     hasUrls: true
-    template: transport-options/_entry.twig
-    uriFormat: 'transport-options/{slug}'
+    template: transfusion/_entry.twig
+    uriFormat: 'transfusion/{slug}'
 structure:
   maxLevels: 1
-  uid: 3d3c44d4-8d95-4372-a095-cf8527ec8872
+  uid: a15300c8-53ad-44ca-ac8c-2820888d8e00
 type: structure

@@ -2,12 +2,10 @@ defaultPlacement: end
 enableVersioning: true
 entryTypes:
   -
-    handle: ent_itemsAndAssets
-    name: 'Items and Assets'
-    uid: 61cd436b-67c4-45ff-b404-9d5f0b6e380f # Job Options
-handle: generalItems
+    uid: 066b15d3-420c-47dc-8971-7f87fbfafde1 # Transport Options
+handle: transferType
 maxAuthors: 1
-name: 'General Items'
+name: 'Transfer Type'
 previewTargets:
   -
     __assoc__:
@@ -25,9 +23,9 @@ siteSettings:
   a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
     enabledByDefault: true
     hasUrls: true
-    template: general-items/_entry.twig
-    uriFormat: 'general-items/{slug}'
+    template: transport-options/_entry.twig
+    uriFormat: 'transport-options/{slug}'
 structure:
-  maxLevels: 1
-  uid: ec3e39b8-68ae-452e-9107-59227a19fd73
+  maxLevels: 2
+  uid: 3d3c44d4-8d95-4372-a095-cf8527ec8872
 type: structure
