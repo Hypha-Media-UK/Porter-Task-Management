@@ -43,46 +43,14 @@
                 <select id="job-category" name="fields[fd_job_category][]" required>
                     <option value="">Select Job Category</option>
                     {% for category in craft.entries.section('jobCategories').all() %}
-                        {% set isSelected = task.fd_job_category.ids()|first == category.id ? true : category.title|lower == 'samples' and not task.fd_job_category.ids()|first %}
-                        <option value="{{ category.id }}" {{ isSelected ? 'selected' : '' }}>
+                        <option value="{{ category.id }}" {{ task.fd_job_category.ids()|first == category.id ? 'selected' : '' }}>
                             {{ category.title }}
                         </option>
                     {% endfor %}
                 </select>
             </div>
             <div class="form-group">
-                <label for="transport-type-dropdown">Transport Method</label>
-                <select id="transport-type-dropdown" name="fields[fd_transportType]" required>
-                    <option value="walk" {{ task.fd_transportType == 'walk' ? 'selected' : '' }}>Walk</option>
-                    <option value="trolley" {{ task.fd_transportType == 'trolley' ? 'selected' : '' }}>Trolley</option>
-                    <option value="wheelchair" {{ task.fd_transportType == 'wheelchair' ? 'selected' : '' }}>Wheelchair</option>
-                    <option value="vehicle" {{ task.fd_transportType == 'vehicle' ? 'selected' : '' }}>Vehicle</option>
-                </select>
-            </div>
-        </div>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label for="from-department">From Department</label>
-                <select id="from-department" name="fields[fd_fromDepartment][]" required>
-                    <option value="">Select From Department</option>
-                    {% for department in craft.entries.section('departments').all() %}
-                        <option value="{{ department.id }}" {{ task.fd_fromDepartment.ids()|first == department.id ? 'selected' : '' }}>
-                            {{ department.title }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="to-department">To Department</label>
-                <select id="to-department" name="fields[fd_toDepartment][]" required>
-                    <option value="">Select To Department</option>
-                    {% for department in craft.entries.section('departments').all() %}
-                        <option value="{{ department.id }}" {{ task.fd_toDepartment.ids()|first == department.id ? 'selected' : '' }}>
-                            {{ department.title }}
-                        </option>
-                    {% endfor %}
-                </select>
+                <!-- Empty div to maintain layout -->
             </div>
         </div>
         
@@ -146,6 +114,7 @@
             </div>
         </div>
         
+        <!-- Patient Transport row (hidden by default) -->
         <div class="form-row" id="transport-type-row" style="display: none;">
             <div class="form-group">
                 <label for="transport-type">Transport Type</label>
@@ -165,6 +134,31 @@
                     {% for staff in craft.entries.section('staff').all() %}
                         <option value="{{ staff.id }}" {{ task.fd_staffMember.ids()|first == staff.id ? 'selected' : '' }}>
                             {{ staff.title }} {{ staff.fd_surname }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="from-department">From Department</label>
+                <select id="from-department" name="fields[fd_fromDepartment][]" required>
+                    <option value="">Select From Department</option>
+                    {% for department in craft.entries.section('departments').all() %}
+                        <option value="{{ department.id }}" {{ task.fd_fromDepartment.ids()|first == department.id ? 'selected' : '' }}>
+                            {{ department.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="to-department">To Department</label>
+                <select id="to-department" name="fields[fd_toDepartment][]" required>
+                    <option value="">Select To Department</option>
+                    {% for department in craft.entries.section('departments').all() %}
+                        <option value="{{ department.id }}" {{ task.fd_toDepartment.ids()|first == department.id ? 'selected' : '' }}>
+                            {{ department.title }}
                         </option>
                     {% endfor %}
                 </select>

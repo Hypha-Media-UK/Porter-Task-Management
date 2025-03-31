@@ -93,15 +93,17 @@ function toggleTransportItemFields(jobCategorySelect) {
     const fromDepartmentSelect = document.getElementById('from-department');
     
     // Set department defaults based on category
-    if (selectedCategoryText === 'samples' && toDepartmentSelect) {
+    if (selectedCategoryText === 'samples') {
         // For Samples, set "To Department" to Pathology
-        Array.from(toDepartmentSelect.options).forEach(option => {
-            if (option.text.toLowerCase() === 'pathology') {
-                toDepartmentSelect.value = option.value;
-            }
-        });
+        if (toDepartmentSelect) {
+            Array.from(toDepartmentSelect.options).forEach(option => {
+                if (option.text.toLowerCase() === 'pathology') {
+                    toDepartmentSelect.value = option.value;
+                }
+            });
+        }
     } else if (selectedCategoryText === 'pathology' && fromDepartmentSelect) {
-        // For Pathology, set "From Department" to Pathology
+        // For Pathology category, set "From Department" to Pathology
         Array.from(fromDepartmentSelect.options).forEach(option => {
             if (option.text.toLowerCase() === 'pathology') {
                 fromDepartmentSelect.value = option.value;
