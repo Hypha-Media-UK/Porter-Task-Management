@@ -93,14 +93,15 @@ function toggleTransportItemFields(jobCategorySelect) {
     const toDepartmentSelect = document.getElementById('to-department');
     const fromDepartmentSelect = document.getElementById('from-department');
     
-    // Only set To Department defaults (not From Department) for Samples category
-    toDepartmentSelect?.querySelectorAll('option').forEach(option => {
-        // If this option has a data-default-for attribute matching the selected category
-        const defaultFor = option.getAttribute('data-default-for')?.split(' ') || [];
-        if (defaultFor.some(cat => selectedCategoryText.includes(cat))) {
-            toDepartmentSelect.value = option.value;
-        }
-    });
+    // Always set "To Department" to Pathology when "Samples" category is selected
+    if (selectedCategoryText === 'samples' && toDepartmentSelect) {
+        // For Samples, set "To Department" to Pathology
+        Array.from(toDepartmentSelect.options).forEach(option => {
+            if (option.text.toLowerCase() === 'pathology') {
+                toDepartmentSelect.value = option.value;
+            }
+        });
+    }
     
     // Only set defaults for Pathology category for From Department
     if (selectedCategoryText === 'pathology' && fromDepartmentSelect) {
