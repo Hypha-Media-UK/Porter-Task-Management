@@ -161,8 +161,8 @@ function setupFormFilterLogic() {
         // Define category mappings
         const categoryMapping = {
             'patient transfer': 'transport-options',
-            'samples': 'pathology',
-            'sample transfer': 'pathology',
+            'samples': 'samples', // Corrected to show Samples entries, not Pathology
+            'sample transfer': 'samples',
             'asset movement': 'assets',
             'pathology': 'pathology',
             'gases': 'gases',
@@ -209,11 +209,18 @@ function filterItemTypesByCategory(jobCategorySelect, itemTypeSelect, optgroups,
     // Set default values
     let targetGroupName = null;
     
-    // Find the matching category map
-    for (const categoryKey in categoryMapping) {
-        if (selectedCategoryText === categoryKey || selectedCategoryText.includes(categoryKey)) {
-            targetGroupName = categoryMapping[categoryKey];
-            break;
+    // Direct mapping for specific categories
+    if (selectedCategoryText === 'pathology') {
+        targetGroupName = 'pathology';
+    } else if (selectedCategoryText === 'samples') {
+        targetGroupName = 'samples';
+    } else {
+        // Find the matching category map for other categories
+        for (const categoryKey in categoryMapping) {
+            if (selectedCategoryText === categoryKey || selectedCategoryText.includes(categoryKey)) {
+                targetGroupName = categoryMapping[categoryKey];
+                break;
+            }
         }
     }
     

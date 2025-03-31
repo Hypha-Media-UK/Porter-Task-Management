@@ -2,7 +2,7 @@ defaultPlacement: end
 enableVersioning: true
 entryTypes:
   -
-    uid: d9f5253d-630f-41f4-9552-78b4c22c4a48 # Pathology
+    uid: 898bdf25-045f-4472-809a-93b4b6f25470 # Pathology
 handle: pathology
 maxAuthors: 1
 name: Pathology
@@ -23,9 +23,9 @@ siteSettings:
   a8c08db8-6502-4930-a808-9da8335199bf: # Porter Track
     enabledByDefault: true
     hasUrls: true
-    template: pathology/_entry.twig
-    uriFormat: 'pathology/{slug}'
+    template: transfusion/_entry.twig
+    uriFormat: 'transfusion/{slug}'
 structure:
   maxLevels: 1
-  uid: 99a125b4-7064-4adb-bddb-6589e32b8a54
+  uid: a15300c8-53ad-44ca-ac8c-2820888d8e00
 type: structure

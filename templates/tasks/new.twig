@@ -29,142 +29,104 @@
         <input type="hidden" name="redirect" value="{{ url('tasks/pending', {shift: craft.app.request.getParam('shift', 'day')}) }}">
         
         <!-- Time fields -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="time-received">Time Received</label>
-                <input type="time" id="time-received" name="fields[fd_time_received]" required>
-            </div>
-            <div class="form-group">
-                <label for="time-allocated">Time Allocated</label>
-                <input type="time" id="time-allocated" name="fields[fd_time_allocated]">
-            </div>
-        </div>
+        <label for="time-received">Time Received</label>
+        <input type="time" id="time-received" name="fields[fd_time_received]" required>
         
-        <!-- Job Category row -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="job-category">Job Category</label>
-                <select id="job-category" name="fields[fd_job_category][]" required>
-                    <option value="">Select Job Category</option>
-                    {% for category in craft.entries.section('jobCategories').all() %}
-                        <option value="{{ category.id }}">{{ category.title }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <!-- Empty div to maintain layout -->
-            </div>
-        </div>
+        <label for="time-allocated">Time Allocated</label>
+        <input type="time" id="time-allocated" name="fields[fd_time_allocated]">
+        
+        <!-- Job Category field - spans full width -->
+        <label for="job-category" class="form-full-width">Job Category</label>
+        <select id="job-category" name="fields[fd_job_category][]" required class="form-full-width">
+            <option value="">Select Job Category</option>
+            {% for category in craft.entries.section('jobCategories').all() %}
+                <option value="{{ category.id }}">{{ category.title }}</option>
+            {% endfor %}
+        </select>
         
         <!-- Normal Item Type row -->
-        <div class="form-row" id="item-type-row">
-            <div class="form-group">
-                <label for="item-type">Item Type</label>
-                <select id="item-type" name="fields[fd_itemType]" required>
-                    <option value="">Select Item Type</option>
-                    
-                    <optgroup label="General Items">
-                    {% for item in craft.entries.section('generalItems').all() %}
-                        <option value="{{ item.id }}" data-category="ad-hoc">{{ item.title }}</option>
-                    {% endfor %}
-                    </optgroup>
-                    
-                    <optgroup label="Samples">
-                    {% for item in craft.entries.section('samples').all() %}
-                        <option value="{{ item.id }}" data-category="sample-transfer">{{ item.title }}</option>
-                    {% endfor %}
-                    </optgroup>
-                    
-                    <optgroup label="Gases">
-                    {% for item in craft.entries.section('gases').all() %}
-                        <option value="{{ item.id }}" data-category="gases">{{ item.title }}</option>
-                    {% endfor %}
-                    </optgroup>
-                    
-                    <optgroup label="Assets">
-                    {% for item in craft.entries.section('assets').all() %}
-                        <option value="{{ item.id }}" data-category="asset-movement">{{ item.title }}</option>
-                    {% endfor %}
-                    </optgroup>
-                    
-                    <optgroup label="Pathology">
-                    {% for item in craft.entries.section('pathology').all() %}
-                        <option value="{{ item.id }}" data-category="pathology">{{ item.title }}</option>
-                    {% endfor %}
-                    </optgroup>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="staff-member">Staff Member (Optional)</label>
-                <select id="staff-member" name="fields[fd_staffMember][]">
-                    <option value="">Assign to Staff Member</option>
-                    {% for staff in craft.entries.section('staff').all() %}
-                        <option value="{{ staff.id }}">{{ staff.title }} {{ staff.fd_surname }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+        <div id="item-type-row" class="form-full-width">
+            <label for="item-type">Item Type</label>
+            <select id="item-type" name="fields[fd_itemType]" required>
+                <option value="">Select Item Type</option>
+                
+                <optgroup label="General Items">
+                {% for item in craft.entries.section('generalItems').all() %}
+                    <option value="{{ item.id }}" data-category="ad-hoc">{{ item.title }}</option>
+                {% endfor %}
+                </optgroup>
+                
+                <optgroup label="Samples">
+                {% for item in craft.entries.section('samples').all() %}
+                    <option value="{{ item.id }}" data-category="sample-transfer">{{ item.title }}</option>
+                {% endfor %}
+                </optgroup>
+                
+                <optgroup label="Gases">
+                {% for item in craft.entries.section('gases').all() %}
+                    <option value="{{ item.id }}" data-category="gases">{{ item.title }}</option>
+                {% endfor %}
+                </optgroup>
+                
+                <optgroup label="Assets">
+                {% for item in craft.entries.section('assets').all() %}
+                    <option value="{{ item.id }}" data-category="asset-movement">{{ item.title }}</option>
+                {% endfor %}
+                </optgroup>
+                
+                <optgroup label="Pathology">
+                {% for item in craft.entries.section('pathology').all() %}
+                    <option value="{{ item.id }}" data-category="pathology">{{ item.title }}</option>
+                {% endfor %}
+                </optgroup>
+            </select>
         </div>
-        
+
         <!-- Patient Transport row (hidden by default) -->
-        <div class="form-row" id="transport-type-row" style="display: none;">
-            <div class="form-group">
-                <label for="transport-type">Transport Type</label>
-                <select id="transport-type" name="fields[fd_transportType]" required>
-                    <option value="">Select Transport Type</option>
-                    {% for item in craft.entries.section('transportOptions').all() %}
-                        <option value="{{ item.id }}">{{ item.title }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="staff-member-transport">Staff Member (Optional)</label>
-                <select id="staff-member-transport" name="fields[fd_staffMember][]">
-                    <option value="">Assign to Staff Member</option>
-                    {% for staff in craft.entries.section('staff').all() %}
-                        <option value="{{ staff.id }}">{{ staff.title }} {{ staff.fd_surname }}</option>
-                    {% endfor %}
-                </select>
-            </div>
+        <div id="transport-type-row" class="form-full-width" style="display: none;">
+            <label for="transport-type">Transport Type</label>
+            <select id="transport-type" name="fields[fd_transportType]" required>
+                <option value="">Select Transport Type</option>
+                {% for item in craft.entries.section('transportOptions').all() %}
+                    <option value="{{ item.id }}">{{ item.title }}</option>
+                {% endfor %}
+            </select>
         </div>
         
-        <!-- Departments -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="from-department">From Department</label>
-                <select id="from-department" name="fields[fd_fromDepartment][]" required>
-                    <option value="">Select From Department</option>
-                    {% for department in craft.entries.section('departments').all() %}
-                        <option value="{{ department.id }}">{{ department.title }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="to-department">To Department</label>
-                <select id="to-department" name="fields[fd_toDepartment][]" required>
-                    <option value="">Select To Department</option>
-                    {% for department in craft.entries.section('departments').all() %}
-                        <option value="{{ department.id }}">{{ department.title }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
+        <!-- From Department -->
+        <label for="from-department">From Department</label>
+        <select id="from-department" name="fields[fd_fromDepartment][]" required>
+            <option value="">Select From Department</option>
+            {% for department in craft.entries.section('departments').all() %}
+                <option value="{{ department.id }}">{{ department.title }}</option>
+            {% endfor %}
+        </select>
+        
+        <!-- To Department -->
+        <label for="to-department">To Department</label>
+        <select id="to-department" name="fields[fd_toDepartment][]" required>
+            <option value="">Select To Department</option>
+            {% for department in craft.entries.section('departments').all() %}
+                <option value="{{ department.id }}">{{ department.title }}</option>
+            {% endfor %}
+        </select>
+        
+        <!-- Staff Member -->
+        <label for="staff-member">Staff Member (Optional)</label>
+        <select id="staff-member" name="fields[fd_staffMember][]">
+            <option value="">Assign to Staff Member</option>
+            {% for staff in craft.entries.section('staff').all() %}
+                <option value="{{ staff.id }}">{{ staff.title }} {{ staff.fd_surname }}</option>
+            {% endfor %}
+        </select>
         
         <!-- Time Completed -->
-        <div class="form-row">
-            <div class="form-group">
-                <label for="time-completed">Time Completed (Optional)</label>
-                <input type="time" id="time-completed" name="fields[fd_time_completed]">
-            </div>
-            <div class="form-group">
-                <!-- Empty div to maintain layout -->
-            </div>
-        </div>
+        <label for="time-completed">Time Completed (Optional)</label>
+        <input type="time" id="time-completed" name="fields[fd_time_completed]">
         
-        <!-- Notes -->
-        <div class="form-group">
-            <label for="notes">Notes (Optional)</label>
-            <textarea id="notes" name="fields[fd_notes]" rows="3"></textarea>
-        </div>
+        <!-- Notes - spans full width -->
+        <label for="notes" class="form-full-width">Notes (Optional)</label>
+        <textarea id="notes" name="fields[fd_notes]" rows="3" class="form-full-width"></textarea>
         
         <!-- Form Buttons -->
         <div class="form-buttons">

@@ -1,6 +1,6 @@
 color: null
 fieldLayouts:
-  2219df3b-168e-4bbb-9f51-c5876b01219b:
+  b45db72f-20f9-455a-8c55-2c5de193c37e:
     tabs:
       -
         elementCondition: null
@@ -10,7 +10,7 @@ fieldLayouts:
             autocomplete: false
             autocorrect: true
             class: null
-            dateAdded: '2025-03-28T07:44:44+00:00'
+            dateAdded: '2025-03-31T10:08:25+00:00'
             disabled: false
             elementCondition: null
             id: null
@@ -31,16 +31,16 @@ fieldLayouts:
             tip: null
             title: null
             type: craft\fieldlayoutelements\entries\EntryTitleField
-            uid: b76de633-9f72-4103-b5a7-5f9321187392
+            uid: a8309203-7a9a-4b7d-b299-705a87a4a0a6
             userCondition: null
             warning: null
             width: 100
         name: Content
-        uid: 7a16028c-45aa-43b4-9c61-9f92ee667d42
+        uid: 388ae568-03f6-4871-8ba6-2724cf525594
         userCondition: null
 handle: ent_pathology
 hasTitleField: true
-icon: prescription-bottle-medical
+icon: droplet
 name: Pathology
 showSlugField: true
 showStatusField: true

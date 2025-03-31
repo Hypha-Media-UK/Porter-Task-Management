@@ -279,21 +279,35 @@ input, select, textarea {
     margin-bottom: $spacing-lg;
   }
   
-  .form-row {
-    display: flex;
-    gap: $spacing-md;
-    margin-bottom: $spacing-md;
-    
-    .form-group {
-      flex: 1;
-      margin-bottom: 0;
-    }
+  // CSS Grid layout
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: $spacing-md;
+  
+  .form-full-width {
+    grid-column: 1 / -1;
   }
   
   .form-buttons {
+    grid-column: 1 / -1;
     display: flex;
     justify-content: space-between;
     margin-top: $spacing-lg;
+  }
+  
+  // Add styles for labels and inputs in the grid
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  // For backwards compatibility
+  .form-row {
+    display: contents;
+  }
+  
+  .form-group {
+    margin-bottom: 0;
   }
 }
 
