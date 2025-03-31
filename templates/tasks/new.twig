@@ -44,41 +44,31 @@
             {% endfor %}
         </select>
         
-        <!-- Normal Item Type row -->
+        <!-- Item Type field with flat structure (no visible section labels) -->
         <div id="item-type-row" class="form-full-width">
             <label for="item-type">Item Type</label>
             <select id="item-type" name="fields[fd_itemType]" required>
                 <option value="">Select Item Type</option>
                 
-                <optgroup label="General Items">
-                {% for item in craft.entries.section('generalItems').all() %}
-                    <option value="{{ item.id }}" data-category="ad-hoc">{{ item.title }}</option>
-                {% endfor %}
-                </optgroup>
+                <!-- Define section mappings directly in the template -->
+                {% set itemTypeSections = {
+                    'generalItems': {'categories': ['ad-hoc', 'general items']},
+                    'samples': {'categories': ['samples', 'sample transfer']},
+                    'gases': {'categories': ['gases']},
+                    'assets': {'categories': ['asset movement']},
+                    'pathology': {'categories': ['pathology']}
+                } %}
                 
-                <optgroup label="Samples">
-                {% for item in craft.entries.section('samples').all() %}
-                    <option value="{{ item.id }}" data-category="sample-transfer">{{ item.title }}</option>
+                <!-- Create a flat list of options with data attributes for filtering -->
+                {% for section, info in itemTypeSections %}
+                    {% for item in craft.entries.section(section).all() %}
+                        <option value="{{ item.id }}" 
+                                data-section="{{ section }}" 
+                                data-categories="{{ info.categories|join(' ') }}">
+                            {{ item.title }}
+                        </option>
+                    {% endfor %}
                 {% endfor %}
-                </optgroup>
-                
-                <optgroup label="Gases">
-                {% for item in craft.entries.section('gases').all() %}
-                    <option value="{{ item.id }}" data-category="gases">{{ item.title }}</option>
-                {% endfor %}
-                </optgroup>
-                
-                <optgroup label="Assets">
-                {% for item in craft.entries.section('assets').all() %}
-                    <option value="{{ item.id }}" data-category="asset-movement">{{ item.title }}</option>
-                {% endfor %}
-                </optgroup>
-                
-                <optgroup label="Pathology">
-                {% for item in craft.entries.section('pathology').all() %}
-                    <option value="{{ item.id }}" data-category="pathology">{{ item.title }}</option>
-                {% endfor %}
-                </optgroup>
             </select>
         </div>
 
@@ -93,21 +83,27 @@
             </select>
         </div>
         
-        <!-- From Department -->
+        <!-- From Department with data attributes for defaults -->
         <label for="from-department">From Department</label>
         <select id="from-department" name="fields[fd_fromDepartment][]" required>
             <option value="">Select From Department</option>
             {% for department in craft.entries.section('departments').all() %}
-                <option value="{{ department.id }}">{{ department.title }}</option>
+                {% set isDefaultFrom = department.title|lower == 'pathology' ? 'pathology' : '' %}
+                <option value="{{ department.id }}" data-default-for="{{ isDefaultFrom }}">
+                    {{ department.title }}
+                </option>
             {% endfor %}
         </select>
         
-        <!-- To Department -->
+        <!-- To Department with data attributes for defaults -->
         <label for="to-department">To Department</label>
         <select id="to-department" name="fields[fd_toDepartment][]" required>
             <option value="">Select To Department</option>
             {% for department in craft.entries.section('departments').all() %}
-                <option value="{{ department.id }}">{{ department.title }}</option>
+                {% set isDefaultTo = department.title|lower == 'pathology' ? 'samples' : '' %}
+                <option value="{{ department.id }}" data-default-for="{{ isDefaultTo }}">
+                    {{ department.title }}
+                </option>
             {% endfor %}
         </select>
         

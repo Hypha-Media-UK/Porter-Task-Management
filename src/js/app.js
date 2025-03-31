@@ -82,6 +82,7 @@ function setupFormListeners() {
 /**
  * Toggles between Transport Type and Item Type fields based on Job Category
  * Also handles default department selection based on category
+ * Uses data attributes for more template-driven approach
  */
 function toggleTransportItemFields(jobCategorySelect) {
     const selectedCategoryText = jobCategorySelect.options[jobCategorySelect.selectedIndex]?.text?.toLowerCase() || '';
@@ -92,17 +93,17 @@ function toggleTransportItemFields(jobCategorySelect) {
     const toDepartmentSelect = document.getElementById('to-department');
     const fromDepartmentSelect = document.getElementById('from-department');
     
-    // Set department defaults based on category
-    if (selectedCategoryText === 'samples') {
-        // For Samples, set "To Department" to Pathology
-        if (toDepartmentSelect) {
-            Array.from(toDepartmentSelect.options).forEach(option => {
-                if (option.text.toLowerCase() === 'pathology') {
-                    toDepartmentSelect.value = option.value;
-                }
-            });
+    // Only set To Department defaults (not From Department) for Samples category
+    toDepartmentSelect?.querySelectorAll('option').forEach(option => {
+        // If this option has a data-default-for attribute matching the selected category
+        const defaultFor = option.getAttribute('data-default-for')?.split(' ') || [];
+        if (defaultFor.some(cat => selectedCategoryText.includes(cat))) {
+            toDepartmentSelect.value = option.value;
         }
-    } else if (selectedCategoryText === 'pathology' && fromDepartmentSelect) {
+    });
+    
+    // Only set defaults for Pathology category for From Department
+    if (selectedCategoryText === 'pathology' && fromDepartmentSelect) {
         // For Pathology category, set "From Department" to Pathology
         Array.from(fromDepartmentSelect.options).forEach(option => {
             if (option.text.toLowerCase() === 'pathology') {
@@ -111,6 +112,7 @@ function toggleTransportItemFields(jobCategorySelect) {
         });
     }
     
+    // Toggle fields based on category
     if (selectedCategoryText.includes('patient')) {
         // For Patient Transfer, show Transport Type and hide Item Type
         if (itemTypeRow) itemTypeRow.style.display = 'none';
@@ -172,7 +174,7 @@ function setupFormFilterLogic() {
         
         // Initial filtering based on default selection
         if (jobCategorySelect.value) {
-            filterItemTypesByCategory(jobCategorySelect, itemTypeSelect, optgroups, categoryMapping);
+            filterItemTypesByCategory(jobCategorySelect, itemTypeSelect, optgroups);
         }
         
         // Set up change handler
@@ -182,7 +184,7 @@ function setupFormFilterLogic() {
             
             // Then filter the item types if showing
             if (document.getElementById('item-type-row').style.display !== 'none') {
-                filterItemTypesByCategory(this, itemTypeSelect, optgroups, categoryMapping);
+                filterItemTypesByCategory(this, itemTypeSelect, optgroups);
             }
         });
         
@@ -195,8 +197,9 @@ function setupFormFilterLogic() {
 
 /**
  * Filters the item types dropdown based on the selected job category
+ * Works with flat options structure using data attributes
  */
-function filterItemTypesByCategory(jobCategorySelect, itemTypeSelect, optgroups, categoryMapping) {
+function filterItemTypesByCategory(jobCategorySelect, itemTypeSelect) {
     const selectedCategoryId = jobCategorySelect.value;
     if (!selectedCategoryId) {
         // If nothing selected, no filtering
@@ -206,59 +209,31 @@ function filterItemTypesByCategory(jobCategorySelect, itemTypeSelect, optgroups,
     // Get the selected category text
     const selectedCategoryText = jobCategorySelect.options[jobCategorySelect.selectedIndex].text.toLowerCase();
     
-    // Set default values
-    let targetGroupName = null;
+    console.log(`Selected category: "${selectedCategoryText}"`);
     
-    // Direct mapping for specific categories
-    if (selectedCategoryText === 'pathology') {
-        targetGroupName = 'pathology';
-    } else if (selectedCategoryText === 'samples') {
-        targetGroupName = 'samples';
-    } else {
-        // Find the matching category map for other categories
-        for (const categoryKey in categoryMapping) {
-            if (selectedCategoryText === categoryKey || selectedCategoryText.includes(categoryKey)) {
-                targetGroupName = categoryMapping[categoryKey];
-                break;
-            }
-        }
-    }
+    // Get all options (except the first placeholder)
+    const options = Array.from(itemTypeSelect.querySelectorAll('option:not(:first-child)'));
     
-    console.log(`Selected category: "${selectedCategoryText}", target group: "${targetGroupName}"`);
-    
-    // Hide all optgroups and options first
-    optgroups.forEach(group => {
-        group.style.display = 'none';
-        Array.from(group.querySelectorAll('option')).forEach(option => {
-            option.style.display = 'none';
-        });
+    // First hide all options
+    options.forEach(option => {
+        option.style.display = 'none';
     });
     
-    // Handle specific case for showing the correct optgroup
-    if (targetGroupName) {
-        // Find the matching optgroup
-        optgroups.forEach(group => {
-            const groupName = group.label.toLowerCase().replace(/\s+/g, '-');
-            if (groupName === targetGroupName || 
-                (targetGroupName === 'transport-options' && groupName === 'patient-transfer')) {
-                group.style.display = '';
-                Array.from(group.querySelectorAll('option')).forEach(option => {
-                    option.style.display = '';
-                });
-                console.log(`Showing optgroup: ${group.label}`);
-            }
-        });
-    } else {
-        // If no specific match, show all options for flexibility
-        console.log("No specific match found, showing all optgroups");
-        optgroups.forEach(group => {
-            group.style.display = '';
-            Array.from(group.querySelectorAll('option')).forEach(option => {
-                option.style.display = '';
-            });
-        });
-    }
+    // Then show only the relevant ones based on category
+    options.forEach(option => {
+        const categories = option.getAttribute('data-categories');
+        if (categories && (
+            categories.includes(selectedCategoryText) || 
+            (selectedCategoryText.includes('patient') && categories.includes('transport'))
+        )) {
+            option.style.display = '';
+            console.log(`Showing item: ${option.textContent.trim()}`);
+        }
+    });
     
-    // Reset selection
-    itemTypeSelect.value = '';
+    // Reset selection if current selection is now hidden
+    if (itemTypeSelect.selectedIndex > 0 && 
+        itemTypeSelect.options[itemTypeSelect.selectedIndex].style.display === 'none') {
+        itemTypeSelect.value = '';
+    }
 }
